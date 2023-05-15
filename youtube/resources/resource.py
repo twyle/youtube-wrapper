@@ -1,11 +1,12 @@
 from abc import ABC, abstractmethod
-from typing import Generic, Generator, Callable, TypeVar
+from typing import Generic, Iterator, Callable, TypeVar
 
 T = TypeVar('T')
 
 class Resource(ABC, Generic[T]):
     @abstractmethod
-    def search(self, params_generator: Callable[..., dict]) -> Generator:
+    def search(self, params_generator: Callable[..., dict], 
+               resource_id_parser: Callable[[dict[str, str]], str]) -> Iterator:
         raise NotImplementedError()
     
     @abstractmethod

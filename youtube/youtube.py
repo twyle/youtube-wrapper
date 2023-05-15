@@ -1,6 +1,6 @@
 from .oauth import Oauth
 from typing import Iterator
-from .resources.video import VideoResource, VideoSearchParamGenerator
+from .resources.video import VideoResource, VideoSearchParamGenerator, VideoIdParser
 
 class YouTube:
     def __init__(self, client_secret_file: str) -> None:
@@ -15,7 +15,8 @@ class YouTube:
     def search_video(self, query: str) -> Iterator:
         """Search for a video using the keywords."""
         search_params = VideoSearchParamGenerator(query)
+        video_id_parser = VideoIdParser()
         video_search = VideoResource(self.__youtube_client)
-        search_iterator = video_search.search(search_params)
+        search_iterator = video_search.search(search_params, video_id_parser)
         print(next(search_iterator))
         

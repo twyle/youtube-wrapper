@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
 
-class ParamGenerator(ABC):
+class ResourceIdParse(ABC):
     @abstractmethod
-    def __call__(self) -> dict[str, str]:
+    def __call__(self) -> str:
         pass      
     
     
