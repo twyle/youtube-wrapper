@@ -10,7 +10,7 @@ class Resource(ABC, Generic[T]):
         raise NotImplementedError()
     
     @abstractmethod
-    def find(self, resource_id: str) -> T:
+    def find(self, params_generator: Callable[..., dict], resource_id: str) -> T:
         raise NotImplementedError()
     
     @abstractmethod

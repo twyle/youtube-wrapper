@@ -15,3 +15,11 @@ class VideoSearchParamGenerator(ParamGenerator):
             'maxResults': self.__max_result,
             'regionCode': self.__region_code
         }
+        
+class FindVideoParamGenerator(ParamGenerator):        
+    def __call__(self, video_id: str) -> dict[str, str]:
+        return {
+            'id': video_id,
+            'part': 'snippet,contentDetails,statistics'
+        }
+        
