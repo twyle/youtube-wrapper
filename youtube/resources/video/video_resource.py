@@ -10,13 +10,13 @@ class VideoResource(Resource[Video]):
     def search(self, search_factory: SearchFactory) -> Iterator:
         self.__search_params_generator = search_factory.get_search_params_generator()
         self.__resource_id_parser = search_factory.get_resource_id_parser()
-        self.__find_factory = search_factory.get_find_factory()
+        self.__search_factory = search_factory
         return self
     
         
-    def find(self, find_factory: FindFactory, video_id: str | list[str]) -> Video:
+    def find(self, find_factory: FindFactory) -> Video:
         find_video_params_generator = find_factory.get_find_params_generator()
-        find_video_params = find_video_params_generator(video_id)
+        find_video_params = find_video_params_generator()
         result = self.__find_youtube_video(find_video_params)  
         video_parser = find_factory.get_response_parser()
         videos = video_parser(result)
@@ -36,7 +36,8 @@ class VideoResource(Resource[Video]):
         video_ids = self.__resource_id_parser(youtube_search_response)
         videos = []
         for video_id in video_ids:
-            result = self.find(self.__find_factory, video_id)
+            find_factory = self.__search_factory.get_find_factory(video_id)
+            result = self.find(find_factory)
             videos.append(result)
         return videos    
     

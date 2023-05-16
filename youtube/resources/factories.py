@@ -22,5 +22,5 @@ class SearchFactory(ABC):
         pass
     
     @abstractmethod
-    def get_find_factory(self) -> FindFactory:
+    def get_find_factory(self, resource_id: str) -> FindFactory:
         pass

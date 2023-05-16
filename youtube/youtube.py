@@ -1,7 +1,7 @@
 from .oauth import Oauth
 from typing import Iterator
 from .resources.video import (
-    VideoResource, VideoSearchFactory, VideoFindFactory
+    VideoResource, VideoSearchFactory, VideoFindFactory, PopularRegionVideoFactory
     )
 from .models.video_model import Video
 
@@ -23,20 +23,22 @@ class YouTube:
         print(next(search_iterator))
         
     def find_video_by_id(self, video_id: str) -> Video:
-        find_factory = VideoFindFactory()
+        find_factory = VideoFindFactory(video_id)
         video_resource = VideoResource(self.__youtube_client)
-        video = video_resource.find(find_factory, video_id)
+        video = video_resource.find(find_factory)
         print(video)
     
     def find_videos(self, video_ids: list[str]) -> list[Video]:
-        find_factory = VideoFindFactory()
+        find_factory = VideoFindFactory(video_ids)
         video_resource = VideoResource(self.__youtube_client)
-        videos = video_resource.find(find_factory, video_ids)
-        print(len(videos))
+        videos = video_resource.find(find_factory)
         print(videos)
     
     def find_most_popular_video_by_region(self, region_code: str) -> list[Video]:
-        pass
+        find_factory = PopularRegionVideoFactory(region_code)
+        video_resource = VideoResource(self.__youtube_client)
+        video = video_resource.find(find_factory)
+        print(video)
     
     def find_most_popular_video_by_category(self, category_id: str) -> list[Video]:
         pass

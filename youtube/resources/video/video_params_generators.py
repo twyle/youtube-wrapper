@@ -16,12 +16,26 @@ class VideoSearchParamGenerator(ParamGenerator):
             'regionCode': self.__region_code
         }
         
-class FindVideoParamGenerator(ParamGenerator):        
-    def __call__(self, video_id: str | list[str]) -> dict[str, str]:
-        if isinstance(video_id, list):
-            video_id = ','.join(video_id)
+class FindVideoParamGenerator(ParamGenerator): 
+    def __init__(self, video_id: str) -> None:
+        self.__video_id = video_id
+               
+    def __call__(self) -> dict[str, str]:
+        if isinstance(self.__video_id, list):
+            self.__video_id = ','.join(self.__video_id)
         return {
-            'id': video_id,
+            'id': self.__video_id,
             'part': 'snippet,contentDetails,statistics'
         }
         
+
+class PopularRegionVideoParams(ParamGenerator):   
+    def __init__(self, region_code: str) -> None:
+        self.__region_code = region_code
+             
+    def __call__(self) -> dict[str, str]:
+        return {
+            'chart': 'mostPopular',
+            'regionCode': self.__region_code,
+            'part': 'snippet,contentDetails,statistics'
+        }
