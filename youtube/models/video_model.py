@@ -10,5 +10,5 @@ class Video:
     video_duration: str
     views_count: int
     likes_count: int
-    comment_count: int
+    comments_count: int
     
