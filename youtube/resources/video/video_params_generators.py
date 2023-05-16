@@ -17,7 +17,9 @@ class VideoSearchParamGenerator(ParamGenerator):
         }
         
 class FindVideoParamGenerator(ParamGenerator):        
-    def __call__(self, video_id: str) -> dict[str, str]:
+    def __call__(self, video_id: str | list[str]) -> dict[str, str]:
+        if isinstance(video_id, list):
+            video_id = ','.join(video_id)
         return {
             'id': video_id,
             'part': 'snippet,contentDetails,statistics'

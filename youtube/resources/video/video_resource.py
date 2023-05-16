@@ -14,13 +14,15 @@ class VideoResource(Resource[Video]):
         return self
     
         
-    def find(self, find_factory: FindFactory, video_id: str) -> Video:
+    def find(self, find_factory: FindFactory, video_id: str | list[str]) -> Video:
         find_video_params_generator = find_factory.get_find_params_generator()
         find_video_params = find_video_params_generator(video_id)
         result = self.__find_youtube_video(find_video_params)  
         video_parser = find_factory.get_response_parser()
-        video = video_parser(result)
-        return video  
+        videos = video_parser(result)
+        if len(videos) == 1:
+            return videos[0]
+        return videos 
             
     def __iter__(self):
         return self

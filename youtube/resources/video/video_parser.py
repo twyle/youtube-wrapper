@@ -3,22 +3,25 @@ from ...models.video_model import Video
 
 class VideoResponseParser(ResponseParser):
     def __call__(self, response: dict[str, str]) -> Video:
-        return self.__create_video(self.__parse_youtube_video(response))
+        parsed_items = self.__parse_youtube_video(response)
+        videos = [self.__create_video(item) for item in parsed_items]
+        return videos
     
     def __parse_youtube_video(self, result: dict[str, str]) -> dict[str, str]:
-        parsed_video_details = dict()
-        items = result['items'][0]
-        parsed_video_details = dict()
-        parsed_video_details['video_id'] = items['id']
-        parsed_video_details['video_title'] = items['snippet']['title']
-        parsed_video_details['channel_title'] = items['snippet']['channelTitle']
-        parsed_video_details['video_description'] = items['snippet']['description']
-        parsed_video_details['video_thumbnail'] = self.__get_thumbnail(items['snippet']['thumbnails'])
-        parsed_video_details['video_duration'] = items['contentDetails']['duration']
-        parsed_video_details['views_count'] = items['statistics']['viewCount']
-        parsed_video_details['likes_count'] = items['statistics']['likeCount']
-        parsed_video_details['comments_count'] = items['statistics']['commentCount']
-        return parsed_video_details
+        parsed_items = []
+        for item in result['items']:
+            parsed_video_details = dict()
+            parsed_video_details['video_id'] = item['id']
+            parsed_video_details['video_title'] = item['snippet']['title']
+            parsed_video_details['channel_title'] = item['snippet']['channelTitle']
+            parsed_video_details['video_description'] = item['snippet']['description']
+            parsed_video_details['video_thumbnail'] = self.__get_thumbnail(item['snippet']['thumbnails'])
+            parsed_video_details['video_duration'] = item['contentDetails']['duration']
+            parsed_video_details['views_count'] = item['statistics']['viewCount']
+            parsed_video_details['likes_count'] = item['statistics']['likeCount']
+            parsed_video_details['comments_count'] = item['statistics']['commentCount']
+            parsed_items.append(parsed_video_details)
+        return parsed_items
     
     def __get_thumbnail(self, thumbnails: dict[str, str]) -> str:
         thumbnail = ''
