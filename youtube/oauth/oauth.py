@@ -3,15 +3,16 @@ import json
 
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
-from google_auth_oauthlib.flow import Flow, InstalledAppFlow
+from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
-from .oauth_constants import YouTubeAPIOauthConstants
+from dataclasses import dataclass, field
 
+@dataclass
 class Oauth:
-    __TOKEN_FILE = YouTubeAPIOauthConstants.TOKEN_FILE
-    __API_SERVICE_NAME = YouTubeAPIOauthConstants.API_SERVICE_NAME
-    __API_VERSION = YouTubeAPIOauthConstants.API_VERSION
-    __SCOPES = YouTubeAPIOauthConstants.SCOPES
+    token_file: str = "credentials.json"
+    api_service_name: str = "youtube"
+    api_version: str = "v3"
+    scopes: list[str] = field(default_factory=lambda: ["https://www.googleapis.com/auth/youtube.force-ssl"]) 
     
     def __init__(self, clients_secret_file) -> None:
         self.__verify_client_secret_file(clients_secret_file)
@@ -37,7 +38,7 @@ class Oauth:
     def __get_default_credentials_path(self):
         """Generate the default api token file location."""
         current_user_home_dir = os.path.expanduser("~")
-        credentials_path = os.path.join(current_user_home_dir, self.__TOKEN_FILE)
+        credentials_path = os.path.join(current_user_home_dir, self.token_file)
         return credentials_path
     
     def __credentials_to_dict(self, credentials: Credentials) -> dict:
@@ -65,7 +66,7 @@ class Oauth:
                 self.__credentials.refresh(Request())
             else:
                 flow = InstalledAppFlow.from_client_secrets_file(
-                    self.__clients_secret_file, self.__SCOPES
+                    self.__clients_secret_file, self.scopes
                 )
                 self.__credentials = flow.run_local_server(port=0)
             with open(
@@ -74,6 +75,6 @@ class Oauth:
                 credentials = self.__credentials_to_dict(self.__credentials)
                 json.dump(credentials, credentials_path)
         youtube_api_client = build(
-            self.__API_SERVICE_NAME, self.__API_VERSION, credentials=self.__credentials
+            self.api_service_name, self.api_version, credentials=self.__credentials
         )
         return youtube_api_client
