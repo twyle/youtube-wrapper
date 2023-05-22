@@ -1,8 +1,8 @@
-.. _intro-overview:
+.. _intro-examples:
 
-==============================
-YouTube-v3 Wrapper at a glance
-==============================
+========
+Examples
+========
 
 YouTube-v3-Wrapper is a python library that enables the user to find and manage YouTube resources. 
 These resources include Videos, Channels, Comments and PlayLists.
