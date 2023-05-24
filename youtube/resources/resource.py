@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from typing import Generic, Iterator, Callable, TypeVar
-from .factories import SearchFactory
+from .factories import SearchFactory, FindFactory
 
 T = TypeVar('T')
 
@@ -10,7 +10,7 @@ class Resource(ABC, Generic[T]):
         raise NotImplementedError()
     
     @abstractmethod
-    def find(self, params_generator: Callable[..., dict], resource_id: str) -> T:
+    def find(self, find_factory: FindFactory, resource_id: str) -> T:
         raise NotImplementedError()
     
     @abstractmethod

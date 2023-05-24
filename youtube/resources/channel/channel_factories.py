@@ -4,7 +4,7 @@ from ..response_parsers import ResponseParser
 from ..resource_id_parser import ResourceIdParse
 from .channel_params_generator import ChannelSearchParamGenerator
 from .search_parser import ChannelIdParser
-from .channel_params_generator import FindChannelParamGenerator
+from .channel_params_generator import FindChannelParamGenerator, FindChannelByNameParamGenerator
 from .find_parser import ChannelResponseParser
 
 class ChannelFindFactory(FindFactory):
@@ -13,6 +13,17 @@ class ChannelFindFactory(FindFactory):
         
     def get_find_params_generator(self) -> ParamGenerator:
         return FindChannelParamGenerator(self.__channel_id)
+    
+    def get_response_parser(self) -> ResponseParser:
+        return ChannelResponseParser()
+    
+
+class ChannelFindBynameFactory(FindFactory):
+    def __init__(self, channel_name: str) -> None:
+        self.__channel_name = channel_name
+        
+    def get_find_params_generator(self) -> ParamGenerator:
+        return FindChannelByNameParamGenerator(self.__channel_name)
     
     def get_response_parser(self) -> ResponseParser:
         return ChannelResponseParser()

@@ -28,3 +28,13 @@ class FindChannelParamGenerator(ParamGenerator):
             'id': self.__channel_id,
             'part': 'snippet,contentDetails,statistics'
         }
+        
+class FindChannelByNameParamGenerator(ParamGenerator): 
+    def __init__(self, channel_name: str) -> None:
+        self.__channel_name = channel_name
+               
+    def __call__(self) -> dict[str, str]:
+        return {
+            'forUsername': self.__channel_name,
+            'part': 'snippet,contentDetails,statistics'
+        }

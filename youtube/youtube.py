@@ -8,7 +8,11 @@ from .models.channel_model import Channel
 from typing import Any, Optional
 from .exceptions.exceptions import TokenExpiredException
 from .resources.channel import (
-    ChannelResource, ChannelSearchFactory, ChannelFindFactory
+    ChannelResource, ChannelSearchFactory, ChannelFindFactory, ChannelFindBynameFactory
+)
+from .models.comment import VideoComment, ChannelComment
+from .resources.comment_thread import (
+    CommentThreadResource, VideoCommentThreadSearchFactory
 )
 class YouTube:
     """
@@ -129,7 +133,10 @@ class YouTube:
     
     def find_channel_by_name(self, channel_name: str) -> Channel:
         """Find a channel by it's name."""
-        raise NotImplementedError()
+        find_factory = ChannelFindBynameFactory(channel_name)
+        channel_resource = ChannelResource(self.__youtube_client)
+        channel = channel_resource.find(find_factory)
+        return channel
     
     def find_my_channel(self) -> Channel:
         """Find the authorized user's channel."""
@@ -141,3 +148,15 @@ class YouTube:
         channel_search = ChannelResource(self.__youtube_client)
         search_iterator = channel_search.search(channel_search_factory)
         return search_iterator
+    
+    def find_video_comments(self, video_id: str, max_results: Optional[int] = 5) -> list[VideoComment]:
+        """Get a particular video's comments."""
+        video_comments_search_factory = VideoCommentThreadSearchFactory(video_id, 
+                                        max_results=max_results)
+        video_comments_search = CommentThreadResource(self.__youtube_client)
+        search_iterator = video_comments_search.search(video_comments_search_factory)
+        return search_iterator
+    
+    def find_channel_comments(self, channel_id: str) -> list[ChannelComment]:
+        """Get a particular channels's comments."""
+        pass
