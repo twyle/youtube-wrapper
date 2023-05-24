@@ -7,18 +7,27 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from dataclasses import dataclass, field
 
+
 @dataclass
 class Oauth:
-    token_file: str = "credentials.json"
-    api_service_name: str = "youtube"
-    api_version: str = "v3"
-    scopes: list[str] = field(default_factory=lambda: ["https://www.googleapis.com/auth/youtube.force-ssl"]) 
+    token_file: str 
+    api_service_name: str 
+    api_version: str 
+    scopes: list[str]  
     
     def __init__(self, clients_secret_file) -> None:
+        self.token_file = "credentials.json"
+        self.api_service_name = "youtube"
+        self.api_version = "v3"
+        self.scopes = ["https://www.googleapis.com/auth/youtube.force-ssl"]
         self.__verify_client_secret_file(clients_secret_file)
         self.__clients_secret_file = clients_secret_file
         self.__credentials_path = self.__get_default_credentials_path()
         self.__credentials = None
+        
+    def delete_credentials_file(self) -> None:
+        if os.path.exists(self.__credentials_path):
+            os.remove(self.__credentials_path)
         
     def __verify_client_secret_file(self, client_secrets_file: str) -> None:
         """Verfy the client secret file."""

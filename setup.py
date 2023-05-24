@@ -32,7 +32,9 @@ setup(
             'youtube.oauth',
             'youtube.models',
             'youtube.resources',
-            'youtube.resources.video'
+            'youtube.resources.video',
+            'youtube.exceptions',
+            'youtube.resources.channel'
         ]
         ),
     version=VERSION,

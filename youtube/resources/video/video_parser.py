@@ -13,6 +13,7 @@ class VideoResponseParser(ResponseParser):
             parsed_video_details = dict()
             parsed_video_details['video_id'] = item['id']
             parsed_video_details['video_title'] = item['snippet']['title']
+            parsed_video_details['published_at'] = item['snippet']['publishedAt']
             parsed_video_details['channel_title'] = item['snippet']['channelTitle']
             parsed_video_details['video_description'] = item['snippet']['description']
             parsed_video_details['video_thumbnail'] = self.__get_thumbnail(item['snippet']['thumbnails'])
@@ -48,6 +49,7 @@ class VideoResponseParser(ResponseParser):
             video_duration=video_data['video_duration'],
             views_count=video_data['views_count'],
             comments_count=video_data['comments_count'],
-            likes_count=video_data['likes_count']
+            likes_count=video_data['likes_count'],
+            published_at=video_data['published_at']
         )
         return video

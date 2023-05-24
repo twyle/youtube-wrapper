@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+import datetime as dt
 
 @dataclass
 class Video:
@@ -11,4 +12,5 @@ class Video:
     views_count: int
     likes_count: int
     comments_count: int
+    published_at: dt.datetime
     
