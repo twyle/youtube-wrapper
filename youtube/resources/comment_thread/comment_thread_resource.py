@@ -1,11 +1,8 @@
 from ..resource import Resource
 from ..factories import SearchFactory, FindFactory
 from typing import Iterator, Any
-from ...models.comment_thread import CommentThread
-from ...models.comment import (
-    CommentAuthor, VideoComment, ChannelComment, Comment
-)
-from ...models.comment_thread import CommentThread, VideoCommentThread
+from ...models.comment_thread_model import CommentThread
+from ...models.comment_thread_model import VideoCommentThread
 
 
 class CommentThreadResource(Resource):
@@ -19,7 +16,7 @@ class CommentThreadResource(Resource):
         self.__search_factory = search_factory
         return self
     
-    def find(self, find_factory: FindFactory, resource_id: str) -> CommentThread:
+    def find(self, find_factory: FindFactory, resource_id: str) -> VideoCommentThread:
         raise NotImplementedError()
     
     def __iter__(self):
@@ -28,7 +25,7 @@ class CommentThreadResource(Resource):
     def __next__(self) -> list[CommentThread]:
         return self.__search_youtube()
     
-    def __search_youtube(self) -> list[CommentThread]:
+    def __search_youtube(self) -> list[VideoCommentThread]:
         search_params = self.__search_params_generator()
         if self.__next_page_token:
             search_params['pageToken'] = self.__next_page_token

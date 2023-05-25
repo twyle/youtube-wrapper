@@ -1,8 +1,8 @@
 from ..response_parsers import ResponseParser
-from ...models.comment import (
+from ...models.comment_model import (
     CommentAuthor, Comment, ChannelComment, VideoComment
 )
-from ...models.comment_thread import VideoCommentThread, ChannelCommentThread, CommentThread
+from ...models.comment_thread_model import VideoCommentThread, CommentThread
 from typing import Any
 
 class VideoThreadResponseParser(ResponseParser):
@@ -72,7 +72,7 @@ class VideoThreadResponseParser(ResponseParser):
         )
         return comment_thread
 
-    def create_video_comment_thread(self, data: dict[str, str]) -> CommentThread:
+    def create_video_comment_thread(self, data: dict[str, str]) -> VideoCommentThread:
         video_comment_thread = VideoCommentThread(
             video_id=data['video_id'],
             top_level_comment=data['top_level_comment'],
@@ -81,7 +81,7 @@ class VideoThreadResponseParser(ResponseParser):
         )
         return video_comment_thread
 
-    def parse_comment_thread(self, data: dict[str, Any]) -> dict[str, Any]:
+    def parse_comment_thread(self, data: dict[str, Any]) -> list[VideoCommentThread]:
         comment_threads = []
         items = data['items']
         for item in items:

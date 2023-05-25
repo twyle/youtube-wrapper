@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from .comment import VideoComment, ChannelComment
+from .comment_model import VideoComment, ChannelComment
 from typing import Optional
 
 

@@ -10,10 +10,14 @@ from .exceptions.exceptions import TokenExpiredException
 from .resources.channel import (
     ChannelResource, ChannelSearchFactory, ChannelFindFactory, ChannelFindBynameFactory
 )
-from .models.comment import VideoComment, ChannelComment
+from .models.comment_model import VideoComment, ChannelComment
 from .resources.comment_thread import (
     CommentThreadResource, VideoCommentThreadSearchFactory, AllChannelCommentThreadSearchFactory
 )
+from .models.playlist_model import Playlist
+from .resources.playlist import PlaylistSearchFactory, PlaylistResource
+
+
 class YouTube:
     """
     Provides methods for interacting with the YouTube API.
@@ -164,3 +168,13 @@ class YouTube:
         channel_comments_search = CommentThreadResource(self.__youtube_client)
         search_iterator = channel_comments_search.search(channel_comments_search_factory)
         return search_iterator
+    
+    def search_playlist(self, query: str, max_results: Optional[int]=2) -> Iterator:
+        """Search for a playlist using the given keywords."""
+        playlist_search_factory = PlaylistSearchFactory(query, max_results=max_results)
+        playlist_search = PlaylistResource(self.__youtube_client)
+        search_iterator = playlist_search.search(playlist_search_factory)
+        return search_iterator
+    
+    def find_channel_playlists(self, channel_id: str) -> list[Playlist]:
+        """Find a channel's playlists."""
