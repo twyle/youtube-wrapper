@@ -17,14 +17,12 @@ class PlaylistResource(Resource[Playlist]):
         return self
     
     def find(self, find_factory: FindFactory) -> Playlist:
-        find_video_params_generator = find_factory.get_find_params_generator()
-        find_video_params = find_video_params_generator()
-        result = self.__find_youtube_video(find_video_params)  
-        video_parser = find_factory.get_response_parser()
-        videos = video_parser(result)
-        if len(videos) == 1:
-            return videos[0]
-        return videos 
+        find_playlist_params_generator = find_factory.get_find_params_generator()
+        find_playlist_params = find_playlist_params_generator()
+        result = self.__find_youtube_playlist(find_playlist_params)  
+        playlist_parser = find_factory.get_response_parser()
+        playlists = playlist_parser(result)
+        return playlists 
             
     def __iter__(self):
         return self
@@ -43,8 +41,8 @@ class PlaylistResource(Resource[Playlist]):
         playlists = self.__resource_id_parser(youtube_search_response)
         return playlists   
     
-    def __find_youtube_video(self, find_params: dict[str, str]) -> dict[str, str]:
-        youtube_find_request = self.__youtube_client.videos().list(
+    def __find_youtube_playlist(self, find_params: dict[str, str]) -> dict[str, str]:
+        youtube_find_request = self.__youtube_client.playlists().list(
             **find_params
         )
         find_response = youtube_find_request.execute()

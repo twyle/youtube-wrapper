@@ -15,3 +15,14 @@ class PlaylistSearchParamGenerator(ParamGenerator):
             'maxResults': self.__max_result,
             'regionCode': self.__region_code
         }
+        
+class FindChannelPlaylistsParamGenerator(ParamGenerator): 
+    def __init__(self, channel_id: str) -> None:
+        self.__channel_id = channel_id
+               
+    def __call__(self) -> dict[str, str]:
+        return {
+            'channelId': self.__channel_id,
+            'part': 'snippet,contentDetails,status,id',
+            'maxResults': 25
+        }

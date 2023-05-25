@@ -12,5 +12,5 @@ class Playlist:
     description: str
     thumbnail: str
     channel_title: str
-    privacy_status: Optional[bool] = False
+    privacy_status: Optional[str] = 'public'
     item_count: Optional[int] = 0

@@ -15,7 +15,7 @@ from .resources.comment_thread import (
     CommentThreadResource, VideoCommentThreadSearchFactory, AllChannelCommentThreadSearchFactory
 )
 from .models.playlist_model import Playlist
-from .resources.playlist import PlaylistSearchFactory, PlaylistResource
+from .resources.playlist import PlaylistSearchFactory, PlaylistResource, ChannelPlaylistsFindFactory
 
 
 class YouTube:
@@ -178,3 +178,7 @@ class YouTube:
     
     def find_channel_playlists(self, channel_id: str) -> list[Playlist]:
         """Find a channel's playlists."""
+        find_factory = ChannelPlaylistsFindFactory(channel_id)
+        playlist_resource = PlaylistResource(self.__youtube_client)
+        playlists = playlist_resource.find(find_factory)
+        return playlists
