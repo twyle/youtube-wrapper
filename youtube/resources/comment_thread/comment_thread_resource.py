@@ -34,6 +34,7 @@ class CommentThreadResource(Resource):
             search_params['pageToken'] = self.__next_page_token
         youtube_search_request = self.__youtube_client.commentThreads().list(**search_params)
         youtube_search_response = youtube_search_request.execute()
+        self.__next_page_token = youtube_search_response.get('nextPageToken', '')
         find_factory = self.__search_factory.get_find_factory()
         video_comment_thread_parser = find_factory.get_response_parser()
         video_comment_threads = video_comment_thread_parser(youtube_search_response)

@@ -5,6 +5,7 @@ import datetime as dt
 class Video:
     video_id: str
     video_title: str
+    channel_d: str
     channel_title: str
     video_description: str
     video_thumbnail: str

@@ -12,7 +12,7 @@ from .resources.channel import (
 )
 from .models.comment import VideoComment, ChannelComment
 from .resources.comment_thread import (
-    CommentThreadResource, VideoCommentThreadSearchFactory
+    CommentThreadResource, VideoCommentThreadSearchFactory, AllChannelCommentThreadSearchFactory
 )
 class YouTube:
     """
@@ -157,6 +157,10 @@ class YouTube:
         search_iterator = video_comments_search.search(video_comments_search_factory)
         return search_iterator
     
-    def find_channel_comments(self, channel_id: str) -> list[ChannelComment]:
+    def find_all_channel_comments(self, channel_id: str, max_results: Optional[int] = 5) -> list[ChannelComment]:
         """Get a particular channels's comments."""
-        pass
+        channel_comments_search_factory = AllChannelCommentThreadSearchFactory(channel_id, 
+                                        max_results=max_results)
+        channel_comments_search = CommentThreadResource(self.__youtube_client)
+        search_iterator = channel_comments_search.search(channel_comments_search_factory)
+        return search_iterator

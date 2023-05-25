@@ -4,24 +4,25 @@ from ...models.channel_model import Channel
 class ChannelResponseParser(ResponseParser):
     def __call__(self, response: dict[str, str]) -> Channel:
         parsed_items = self.__parse_youtube_channel(response)
-        channels = [self.__create_channel(item) for item in parsed_items]
+        channels = [self.__create_channel(item) for item in parsed_items] if parsed_items else []
         return channels
     
     def __parse_youtube_channel(self, result: dict[str, str]) -> dict[str, str]:
         parsed_items = []
-        for item in result['items']:
-            parsed_channel_details = dict()
-            parsed_channel_details['channel_id'] = item['id']
-            parsed_channel_details['channel_title'] = item['snippet']['title']
-            parsed_channel_details['published_at'] = item['snippet']['publishedAt']
-            parsed_channel_details['custom_url'] = item['snippet']['customUrl']
-            parsed_channel_details['channel_description'] = item['snippet']['description']
-            parsed_channel_details['channel_thumbnail'] = self.__get_thumbnail(item['snippet']['thumbnails'])
-            if not item['statistics']['hiddenSubscriberCount']:
-                parsed_channel_details['subscribers_count'] = item['statistics']['subscriberCount']
-            parsed_channel_details['views_count'] = item['statistics']['viewCount']
-            parsed_channel_details['videos_count'] = item['statistics']['videoCount']
-            parsed_items.append(parsed_channel_details)
+        if result.get('items'):
+            for item in result['items']:
+                parsed_channel_details = dict()
+                parsed_channel_details['channel_id'] = item['id']
+                parsed_channel_details['channel_title'] = item['snippet']['title']
+                parsed_channel_details['published_at'] = item['snippet']['publishedAt']
+                parsed_channel_details['custom_url'] = item['snippet']['customUrl']
+                parsed_channel_details['channel_description'] = item['snippet']['description']
+                parsed_channel_details['channel_thumbnail'] = self.__get_thumbnail(item['snippet']['thumbnails'])
+                if not item['statistics']['hiddenSubscriberCount']:
+                    parsed_channel_details['subscribers_count'] = item['statistics']['subscriberCount']
+                parsed_channel_details['views_count'] = item['statistics']['viewCount']
+                parsed_channel_details['videos_count'] = item['statistics']['videoCount']
+                parsed_items.append(parsed_channel_details)
         return parsed_items
     
     def __get_thumbnail(self, thumbnails: dict[str, str]) -> str:

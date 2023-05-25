@@ -14,6 +14,7 @@ class VideoResponseParser(ResponseParser):
             parsed_video_details['video_id'] = item['id']
             parsed_video_details['video_title'] = item['snippet']['title']
             parsed_video_details['published_at'] = item['snippet']['publishedAt']
+            parsed_video_details['channel_id'] = item['snippet']['channelId']
             parsed_video_details['channel_title'] = item['snippet']['channelTitle']
             parsed_video_details['video_description'] = item['snippet']['description']
             parsed_video_details['video_thumbnail'] = self.__get_thumbnail(item['snippet']['thumbnails'])
@@ -43,6 +44,7 @@ class VideoResponseParser(ResponseParser):
         video = Video(
             video_id=video_data['video_id'],
             video_title=video_data['video_title'],
+            channel_d=video_data['channel_id'],
             channel_title=video_data['channel_title'],
             video_description=video_data['video_description'],
             video_thumbnail=video_data['video_thumbnail'],

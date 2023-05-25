@@ -34,7 +34,8 @@ setup(
             'youtube.resources',
             'youtube.resources.video',
             'youtube.exceptions',
-            'youtube.resources.channel'
+            'youtube.resources.channel',
+            'youtube.resources.comment_thread'
         ]
         ),
     version=VERSION,
