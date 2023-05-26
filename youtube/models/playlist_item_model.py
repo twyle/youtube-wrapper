@@ -16,6 +16,6 @@ class PlaylistItem:
     playlist_id: str
     position: int
     video_id: str
+    resource_id: str
     video_published_at: dt.datetime
     privacy_status: bool
-    

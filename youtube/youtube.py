@@ -16,6 +16,9 @@ from .resources.comment_thread import (
 )
 from .models.playlist_model import Playlist
 from .resources.playlist import PlaylistSearchFactory, PlaylistResource, ChannelPlaylistsFindFactory
+from .resources.playlist_item import PlaylistItemResource, PlaylistItemSearchFactory
+from .models.playlist_item_model import PlaylistItem
+
 
 
 class YouTube:
@@ -182,3 +185,11 @@ class YouTube:
         playlist_resource = PlaylistResource(self.__youtube_client)
         playlists = playlist_resource.find(find_factory)
         return playlists
+    
+    def find_playlist_items(self, playlist_id: str, max_results: Optional[int] = 5) -> list[PlaylistItem]:
+        """Get a particular video's comments."""
+        playlist_item_search_factory = PlaylistItemSearchFactory(playlist_id, 
+                                        max_results=max_results)
+        playlist_item_search = PlaylistItemResource(self.__youtube_client)
+        search_iterator = playlist_item_search.search(playlist_item_search_factory)
+        return search_iterator
