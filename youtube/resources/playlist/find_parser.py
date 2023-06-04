@@ -26,12 +26,12 @@ class FindParser(ResourceIdParse):
             playlist_id=data['playlist_id'],
             published_at=data['published_at'],
             channel_id=data['channel_id'],
-            title=data['title'],
-            description=data['description'],
-            thumbnail=data['thumbnail'],
+            playlist_title=data['playlist_title'],
+            playlist_description=data['playlist_description'],
+            playlist_thumbnail=data['playlist_thumbnail'],
             channel_title=data['channel_title'],
             privacy_status=data['privacy_status'],
-            item_count=data['item_count']
+            videos_count=data['videos_count']
         )
         return playlist
 
@@ -43,11 +43,11 @@ class FindParser(ResourceIdParse):
                 parsed_item['playlist_id'] = item['id']
                 parsed_item['published_at'] = item['snippet']['publishedAt']
                 parsed_item['channel_id'] = item['snippet']['channelId']
-                parsed_item['title'] = item['snippet']['title']
-                parsed_item['description'] = item['snippet']['description']
-                parsed_item['thumbnail'] = self.__get_thumbnail(item['snippet']['thumbnails'])
+                parsed_item['playlist_title'] = item['snippet']['title']
+                parsed_item['playlist_description'] = item['snippet']['description']
+                parsed_item['playlist_thumbnail'] = self.__get_thumbnail(item['snippet']['thumbnails'])
                 parsed_item['channel_title'] = item['snippet']['channelTitle']
                 parsed_item['privacy_status'] = item['status']['privacyStatus']
-                parsed_item['item_count'] = item['contentDetails']['itemCount']
+                parsed_item['videos_count'] = item['contentDetails']['itemCount']
                 playlists.append(self.__create_playlist(parsed_item))
         return playlists

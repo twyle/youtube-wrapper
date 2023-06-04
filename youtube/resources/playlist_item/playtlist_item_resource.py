@@ -19,7 +19,7 @@ class PlaylistItemResource(Resource):
         raise NotImplementedError()
     
     def __iter__(self):
-        raise NotImplementedError()
+        return self
     
     def __next__(self) -> list[PlaylistItem]:
         return self.__search_youtube()

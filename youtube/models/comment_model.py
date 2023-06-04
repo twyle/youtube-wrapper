@@ -1,10 +1,11 @@
 from dataclasses import dataclass, field
 from typing import Optional, Any
 import datetime as dt
+from .resource_saver_mixins import ResourseSaverMixin
 
 
 @dataclass
-class CommentAuthor:
+class CommentAuthor(ResourseSaverMixin):
     author_display_name: str
     author_profile_image_url: str
     author_channel_url: Optional[str] = ''
@@ -12,7 +13,7 @@ class CommentAuthor:
     
     
 @dataclass
-class Comment:
+class Comment(ResourseSaverMixin):
     comment_id: str
     comment_author: CommentAuthor
     text_display: str
@@ -23,11 +24,11 @@ class Comment:
     parent_id: Optional[str] = ''
  
 @dataclass   
-class VideoComment:
+class VideoComment(ResourseSaverMixin):
     video_id: str
     comment: Comment
     
 @dataclass    
-class ChannelComment:
+class ChannelComment(ResourseSaverMixin):
     channel_id: str
     comment: Comment

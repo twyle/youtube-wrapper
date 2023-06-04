@@ -35,6 +35,8 @@ setup(
             'youtube.resources.video',
             'youtube.exceptions',
             'youtube.resources.channel',
+            'youtube.resources.playlist',
+            'youtube.resources.playlist_item',
             'youtube.resources.comment_thread'
         ]
         ),

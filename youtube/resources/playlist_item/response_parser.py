@@ -57,10 +57,19 @@ class PlaylistItemResponseParser(ResponseParser):
                 parsed_item['playlist_id'] = item['snippet']['playlistId']
                 parsed_item['position'] = item['snippet']['position']
                 parsed_item['resource_id'] = item['snippet']['resourceId']['videoId']
-                parsed_item['video_owner_channel_title'] = item['snippet']['videoOwnerChannelTitle']
-                parsed_item['video_owner_channel_id'] = item['snippet']['videoOwnerChannelId']
+                if item['snippet'].get('videoOwnerChannelTitle'):
+                    parsed_item['video_owner_channel_title'] = item['snippet']['videoOwnerChannelTitle']
+                else:
+                    parsed_item['video_owner_channel_title'] = ''
+                if item['snippet'].get('videoOwnerChannelId'):
+                    parsed_item['video_owner_channel_id'] = item['snippet']['videoOwnerChannelId']
+                else:
+                    parsed_item['video_owner_channel_id'] = ''
                 parsed_item['privacy_status'] = item['status']['privacyStatus']
-                parsed_item['video_published_at'] = item['contentDetails']['videoPublishedAt']
+                if item['contentDetails'].get('videoPublishedAt'):
+                    parsed_item['video_published_at'] = item['contentDetails']['videoPublishedAt']
+                else:
+                    parsed_item['video_published_at'] = ''
                 parsed_item['video_id'] = item['contentDetails']['videoId']
                 playlist_items.append(self.create_playlist_item(parsed_item))
         return playlist_items

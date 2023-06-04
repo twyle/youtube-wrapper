@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
-from typing import Generic, Iterator, Callable, TypeVar
+from typing import Generic, Iterator, TypeVar
 from .factories import SearchFactory, FindFactory
+
 
 T = TypeVar('T')
 

@@ -44,7 +44,7 @@ class VideoResponseParser(ResponseParser):
         video = Video(
             video_id=video_data['video_id'],
             video_title=video_data['video_title'],
-            channel_d=video_data['channel_id'],
+            channel_id=video_data['channel_id'],
             channel_title=video_data['channel_title'],
             video_description=video_data['video_description'],
             video_thumbnail=video_data['video_thumbnail'],

@@ -1,16 +1,17 @@
 from dataclasses import dataclass
 import datetime as dt
 from typing import Optional
+from .resource_saver_mixins import ResourseSaverMixin
 
 
 @dataclass
-class Playlist:
+class Playlist(ResourseSaverMixin):
     playlist_id: str
     published_at: dt.datetime
     channel_id: str
-    title: str
-    description: str
-    thumbnail: str
+    playlist_title: str
+    playlist_description: str
+    playlist_thumbnail: str
     channel_title: str
     privacy_status: Optional[str] = 'public'
-    item_count: Optional[int] = 0
+    videos_count: Optional[int] = 0

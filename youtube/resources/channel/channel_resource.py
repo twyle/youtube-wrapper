@@ -1,7 +1,7 @@
 from ..resource import Resource
 from ...models.channel_model import Channel
 from ..factories import SearchFactory, FindFactory
-from typing import Callable, Iterator, Any
+from typing import Iterator, Any
 
 
 class ChannelResource(Resource):

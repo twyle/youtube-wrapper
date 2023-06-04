@@ -1,9 +1,10 @@
 from dataclasses import dataclass
 import datetime as dt
+from .resource_saver_mixins import ResourseSaverMixin
 
 
 @dataclass
-class PlaylistItem:
+class PlaylistItem(ResourseSaverMixin):
     playlist_item_id: str
     date_added: dt.datetime
     channel_adder_id: str
