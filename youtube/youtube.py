@@ -1,28 +1,13 @@
 from .oauth import Oauth
-from typing import Iterator, Optional
-from .resources.video import (
-    VideoResource, VideoSearchFactory, VideoFindFactory, PopularRegionVideoFactory
-    )
-from .models.video_model import Video
-from .models.channel_model import Channel
+from typing import Optional
 from typing import Any, Optional
-from .exceptions.exceptions import TokenExpiredException
-from .resources.channel import (
-    ChannelResource, ChannelSearchFactory, ChannelFindFactory, ChannelFindBynameFactory
+
+from .resources.mixins import (
+    VideoMixin, ChannelMixin, CommentMixin, PlaylistMixin
 )
-from .models.comment_model import VideoComment, ChannelComment
-from .resources.comment_thread import (
-    CommentThreadResource, VideoCommentThreadSearchFactory, AllChannelCommentThreadSearchFactory
-)
-from .models.playlist_model import Playlist
-from .resources.playlist import PlaylistSearchFactory, PlaylistResource, ChannelPlaylistsFindFactory
-from .resources.playlist_item import PlaylistItemResource, PlaylistItemSearchFactory
-from .models.playlist_item_model import PlaylistItem
-from .decorators import Auth
 
 
-
-class YouTube:
+class YouTube(Oauth, VideoMixin, ChannelMixin, CommentMixin, PlaylistMixin):
     """
     Provides methods for interacting with the YouTube API.
     
@@ -54,29 +39,8 @@ class YouTube:
             This is a string representing the path to the client secret file downloaded from 
             Google.
         """
-        self.__client_secret_file = client_secret_file
-        self.__oauth = Oauth(self.__client_secret_file)
+        super().__init__()
         self.__youtube_client = None
-        
-    @property
-    def client_secret_file(self) -> str:
-        """Get the client secret file location."""
-        return self.__client_secret_file
-    
-    @client_secret_file.setter
-    def client_secret_file(self, client_secret_file: str) -> None:
-        """Set the client secret file location."""
-        self.__client_secret_file = client_secret_file
-        
-    @property
-    def oauth(self) -> Oauth:
-        """Get the oauth client."""
-        return self.__oauth
-    
-    @oauth.setter
-    def oauth(self) -> None:
-        """Create the oauth object."""
-        self.__oauth = Oauth(self.__client_secret_file)
         
     @property
     def youtube_client(self) -> Any:
@@ -84,130 +48,4 @@ class YouTube:
         
         The youtube client is the object used to interact with the YouTube API.
         """
-        return self.__youtube_client
-    
-    def authenticate(self, client_secret_file: Optional[str] = '') -> None:
-        """Set the youtube client."""
-        if client_secret_file:
-            self.client_secret_file = client_secret_file
-        if not self.client_secret_file:
-            raise ValueError('The client secret was not provided.')
-        self.__youtube_client = self.oauth.authenticate(self.client_secret_file)
-    
-    def search_video(self, query: str, max_results: Optional[int]=2) -> Iterator:
-        """Search for a video using the given keywords."""
-        video_search_factory = VideoSearchFactory(query, max_results=max_results)
-        video_search = VideoResource(self.youtube_client)
-        search_iterator = video_search.search(video_search_factory)
-        return search_iterator
-    
-    @Auth()   
-    def find_video_by_id(self, video_id: str) -> Video:
-        """Find a video using its id."""
-        find_factory = VideoFindFactory(video_id)
-        video_resource = VideoResource(self.youtube_client)
-        video = video_resource.find(find_factory)
-        return video
-    
-    def find_videos(self, video_ids: list[str]) -> list[Video]:
-        find_factory = VideoFindFactory(video_ids)
-        video_resource = VideoResource(self.youtube_client)
-        videos = video_resource.find(find_factory)
-        return videos
-    
-    def find_most_popular_video_by_region(self, region_code: str) -> list[Video]:
-        find_factory = PopularRegionVideoFactory(region_code)
-        video_resource = VideoResource(self.youtube_client)
-        videos = video_resource.find(find_factory)
-        return videos
-    
-    def find_most_popular_video_by_category(self, category_id: str) -> list[Video]:
-        pass
-        
-    def get_ratings(self) -> None:
-        """Retrieves the ratings that the authorized user gave to a list of specified videos."""
-        raise NotImplementedError()
-    
-    def insert(self) -> None:
-        """Uploads a video to YouTube and optionally sets the video's metadata."""
-        raise NotImplementedError()
-    
-    def update(self) -> None:
-        """Updates a video's metadata."""
-        raise NotImplementedError()
-    
-    def delete(self) -> None:
-        """Deletes a YouTube video."""
-        raise NotImplementedError()
-    
-    def delete(self) -> None:
-        """Deletes a YouTube video."""
-        raise NotImplementedError()
-    
-    def rate(self) -> None:
-        """Add a like or dislike rating to a video or remove a rating from a video."""
-        raise NotImplementedError()
-    
-    def find_channel_by_id(self, channel_id: str) -> Channel:
-        """Find a channel by it's id."""
-        find_factory = ChannelFindFactory(channel_id)
-        channel_resource = ChannelResource(self.youtube_client)
-        channel = channel_resource.find(find_factory)
-        return channel
-    
-    def find_channel_by_name(self, channel_name: str) -> Channel:
-        """Find a channel by it's name."""
-        find_factory = ChannelFindBynameFactory(channel_name)
-        channel_resource = ChannelResource(self.youtube_client)
-        channel = channel_resource.find(find_factory)
-        return channel
-    
-    def find_my_channel(self) -> Channel:
-        """Find the authorized user's channel."""
-        raise NotImplementedError()
-    
-    def search_channel(self, query: str, max_results: Optional[int]=2) -> Iterator:
-        """Search for a video using the given keywords."""
-        channel_search_factory = ChannelSearchFactory(query, max_results=max_results)
-        channel_search = ChannelResource(self.youtube_client)
-        search_iterator = channel_search.search(channel_search_factory)
-        return search_iterator
-    
-    def find_video_comments(self, video_id: str, max_results: Optional[int] = 5) -> list[VideoComment]:
-        """Get a particular video's comments."""
-        video_comments_search_factory = VideoCommentThreadSearchFactory(video_id, 
-                                        max_results=max_results)
-        video_comments_search = CommentThreadResource(self.youtube_client)
-        search_iterator = video_comments_search.search(video_comments_search_factory)
-        return search_iterator
-    
-    def find_all_channel_comments(self, channel_id: str, max_results: Optional[int] = 5) -> list[ChannelComment]:
-        """Get a particular channels's comments."""
-        channel_comments_search_factory = AllChannelCommentThreadSearchFactory(channel_id, 
-                                        max_results=max_results)
-        channel_comments_search = CommentThreadResource(self.youtube_client)
-        search_iterator = channel_comments_search.search(channel_comments_search_factory)
-        return search_iterator
-    
-    def search_playlist(self, query: str, max_results: Optional[int]=2) -> Iterator:
-        """Search for a playlist using the given keywords."""
-        playlist_search_factory = PlaylistSearchFactory(query, max_results=max_results)
-        playlist_search = PlaylistResource(self.youtube_client)
-        search_iterator = playlist_search.search(playlist_search_factory)
-        return search_iterator
-
-    
-    def find_channel_playlists(self, channel_id: str) -> list[Playlist]:
-        """Find a channel's playlists."""
-        find_factory = ChannelPlaylistsFindFactory(channel_id)
-        playlist_resource = PlaylistResource(self.youtube_client)
-        playlists = playlist_resource.find(find_factory)
-        return playlists
-    
-    def find_playlist_items(self, playlist_id: str, max_results: Optional[int] = 5) -> list[PlaylistItem]:
-        """Get a particular video's comments."""
-        playlist_item_search_factory = PlaylistItemSearchFactory(playlist_id, 
-                                        max_results=max_results)
-        playlist_item_search = PlaylistItemResource(self.youtube_client)
-        search_iterator = playlist_item_search.search(playlist_item_search_factory)
-        return search_iterator
+        return super().__youtube_client

@@ -8,6 +8,7 @@ from googleapiclient.discovery import build
 from dataclasses import dataclass
 from google.auth.exceptions import RefreshError
 from json.decoder import JSONDecodeError
+from typing import Optional
 
 
 @dataclass
@@ -17,13 +18,13 @@ class Oauth:
     api_version: str 
     scopes: list[str]  
     
-    def __init__(self, clients_secret_file: str) -> None:
+    def __init__(self) -> None:
         self.token_file = "credentials.json"
         self.api_service_name = "youtube"
         self.api_version = "v3"
         self.scopes = ["https://www.googleapis.com/auth/youtube.force-ssl"]
-        self.verify_client_secret_file(clients_secret_file)
         self.__youtube_client = None
+        self.__clients_secret_file = None
         
     def delete_credentials_file(self, credentials_path: str) -> None:
         if os.path.exists(credentials_path):
@@ -132,11 +133,13 @@ class Oauth:
         )
         return youtube_client
             
-    def authenticate(self, clients_secret_file: str):
+    def authenticate(self, clients_secret_file: Optional[str] = ''):
+        if clients_secret_file:
+            self.clients_secret_file = clients_secret_file
         credentials_path = self.get_default_credentials_path()
         credentials = self.get_credentials(credentials_path)
         if not credentials or not self.verify_credentials(credentials, self.api_service_name, self.api_version):
-            credentials = self.generate_credentials(clients_secret_file, self.scopes)
+            credentials = self.generate_credentials(self.clients_secret_file, self.scopes)
             self.verify_credentials(credentials, self.api_service_name, self.api_version)
             self.save_credentials(credentials, credentials_path)
         youtube_client = self.get_youtube_client(credentials, self.api_service_name, self.api_version)

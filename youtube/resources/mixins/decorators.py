@@ -1,9 +1,8 @@
-from typing import Any
-from google.auth.exceptions import RefreshError
+from typing import Any, Callable
 
 
 class Auth:        
-    def __call__(self, func) -> Any:
+    def __call__(self, func: Callable[[Any], Any]) -> Callable[[Any], Any]:
         def wrapper(self, *args: Any, **kwds: Any):              
             if not self.youtube_client:
                 raise ValueError('The current request is not authenticated. Use "youtube.authenticate()".')
