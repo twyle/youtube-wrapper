@@ -1,5 +1,5 @@
 from .oauth import Oauth
-from typing import Iterator
+from typing import Iterator, Optional
 from .resources.video import (
     VideoResource, VideoSearchFactory, VideoFindFactory, PopularRegionVideoFactory
     )
@@ -45,7 +45,7 @@ class YouTube:
     find_most_popular_video_by_region(region_code)
         Find the most popular videos in the given region.
     """
-    def __init__(self, client_secret_file: str) -> None:
+    def __init__(self, client_secret_file: Optional[str] = '') -> None:
         """Create the youtube instance.
         
         Parameters
@@ -56,7 +56,7 @@ class YouTube:
         """
         self.__client_secret_file = client_secret_file
         self.__oauth = Oauth(self.__client_secret_file)
-        self.authenticate()
+        self.__youtube_client = None
         
     @property
     def client_secret_file(self) -> str:
@@ -86,27 +86,22 @@ class YouTube:
         """
         return self.__youtube_client
     
-    def authenticate(self) -> None:
+    def authenticate(self, client_secret_file: Optional[str] = '') -> None:
         """Set the youtube client."""
-        print('Authenticating')
-        self.__youtube_client = self.oauth.authenticate_from_clients_secret_file()
+        if client_secret_file:
+            self.client_secret_file = client_secret_file
+        if not self.client_secret_file:
+            raise ValueError('The client secret was not provided.')
+        self.__youtube_client = self.oauth.authenticate(self.client_secret_file)
     
     def search_video(self, query: str, max_results: Optional[int]=2) -> Iterator:
         """Search for a video using the given keywords."""
-        try:
-            video_search_factory = VideoSearchFactory(query, max_results=max_results)
-            video_search = VideoResource(self.youtube_client)
-            search_iterator = video_search.search(video_search_factory)
-        except TokenExpiredException as e:
-            self.__oauth.delete_credentials_file()
-            self.youtube_client = self.__oauth.authenticate_from_clients_secret_file()
-            video_search_factory = VideoSearchFactory(query, max_results=max_results)
-            video_search = VideoResource(self.youtube_client)
-            search_iterator = video_search.search(video_search_factory)
-        else:
-            return search_iterator
+        video_search_factory = VideoSearchFactory(query, max_results=max_results)
+        video_search = VideoResource(self.youtube_client)
+        search_iterator = video_search.search(video_search_factory)
+        return search_iterator
     
-    @Auth()    
+    @Auth()   
     def find_video_by_id(self, video_id: str) -> Video:
         """Find a video using its id."""
         find_factory = VideoFindFactory(video_id)

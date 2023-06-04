@@ -40,6 +40,7 @@ def print_videos(videos):
 # client_secrets_file = '/home/lyle/Downloads/python_learning_site.json'
 client_secrets_file = '/home/lyle/Downloads/temp.json'
 youtube = YouTube(client_secrets_file)
+youtube.authenticate()
 # search_iterator = youtube.search_video('Python for beginners',max_results=2)
 # videos = list(next(search_iterator))
 # print(videos)

@@ -23,15 +23,11 @@ class Oauth:
         self.api_version = "v3"
         self.scopes = ["https://www.googleapis.com/auth/youtube.force-ssl"]
         self.verify_client_secret_file(clients_secret_file)
-        self.__clients_secret_file = clients_secret_file
-        self.__credentials_path = self.__get_default_credentials_path()
-        self.__credentials = None
         self.__youtube_client = None
         
-    def delete_credentials_file(self) -> None:
-        if os.path.exists(self.__credentials_path):
-            print('Deleting credentials file.')
-            os.remove(self.__credentials_path)
+    def delete_credentials_file(self, credentials_path: str) -> None:
+        if os.path.exists(credentials_path):
+            os.remove(credentials_path)
         
     def verify_client_secret_file(self, client_secrets_file: str) -> None:
         """Verfy the client secret file."""
@@ -79,73 +75,70 @@ class Oauth:
         
     def get_credentials(self, credentials_path: str) -> Credentials:
         """Get the credentials."""
+        self.verify_credentials_file(credentials_path)
         credentials = None
-        if os.path.exists(credentials_path):
-            with open(self.credentials_path, "r", encoding="utf-8") as creds:
-                credentials = Credentials(**json.load(creds))
+        with open(credentials_path, "r", encoding="utf-8") as creds:
+            credentials = Credentials(**json.load(creds))
         return credentials
     
-    def verify_credentials(self, credentials_path: str) -> bool:
+    def verify_credentials_file(self, credentials_path: str) -> bool:
         if not credentials_path:
             raise ValueError('The credentials path has to be provided.')
+        if not isinstance(credentials_path, str):
+            raise TypeError('The credentials path should be a string')
+        if not os.path.exists(credentials_path):
+            raise ValueError('The given credentials path doses ot exist.')
+        try:
+            with open(credentials_path, 'r', encoding='utf-8') as f:
+                json.load(f)
+        except JSONDecodeError:
+            raise ValueError('Invalid credentials file format')
+        self.verify_credentials_format(credentials_path)
+        return True
         
+    def verify_credentials_format(self, credentials_path: str) -> bool:
+        """Ensure all the keys are present"""
+        with open(credentials_path, 'r', encoding='utf-8') as f:
+            credentials_dict = json.load(f)
+        return True
+    
+    def verify_credentials(self, credentials: Credentials, api_service_name: str, api_version: str) -> bool:
         youtube_api_client = build(
-            self.api_service_name, self.api_version, credentials=credentials
+            api_service_name, api_version, credentials=credentials
         )
         youtube_find_request = youtube_api_client.search().list(q='', part='id')
         try:
             youtube_find_request.execute()
-        except RefreshError as e:
-            print(str(e))
+        except RefreshError:
             return False
+        return True
         
-    def generate_credentials(self, clients_secret_file: str = '', scopes: list[str] = ['']) -> Credentials:
+    def generate_credentials(self, clients_secret_file: str, scopes: list[str]) -> Credentials:
         credentials = None
-        clients_secret_file = '/home/lyle/Downloads/temp.json'
         self.verify_client_secret_file(clients_secret_file)
-        scopes = ["https://www.googleapis.com/auth/youtube.force-ssl"]
         flow = InstalledAppFlow.from_client_secrets_file(
                 clients_secret_file, scopes)
         credentials = flow.run_local_server(port=0)
         return credentials
    
-    def save_credentials(self, credentials: Credentials = None, credentials_path: str = '') -> None:
-        credentials_path = '/home/lyle/credentials.json'
-        credentials = self.generate_credentials()
+    def save_credentials(self, credentials: Credentials, credentials_path: str) -> None:
         credentials_dict = self.credentials_to_dict(credentials)
         with open(credentials_path, 'w', encoding='utf-8') as f:
             json.dump(credentials_dict, f)        
             
-    @prope
-    
-    def authenticate_from_clients_secret_file(self, clients_secret_file: str):
-        """Authenticate user from the clients secret file."""
-        
-        if os.path.exists(self.__credentials_path):
-            print('opening from crdentials...')
-            with open(self.__credentials_path, "r", encoding="utf-8") as credentials:
-                self.__credentials = Credentials(**json.load(credentials))
-        else:
-            if not self.__credentials or not self.__credentials.valid:
-                print('refreshing from crdentials...')
-                if (
-                    self.__credentials
-                    and self.__credentials.expired
-                    and self.__credentials.refresh_token
-                ):
-                    self.__credentials.refresh(Request())
-                else:
-                    print('generating from crdentials...')
-                    flow = InstalledAppFlow.from_client_secrets_file(
-                        self.__clients_secret_file, self.scopes
-                    )
-                    self.__credentials = flow.run_local_server(port=0)
-                with open(
-                    self.__credentials_path, "w", encoding="utf-8"
-                ) as credentials_path:
-                    credentials = self.__credentials_to_dict(self.__credentials)
-                    json.dump(credentials, credentials_path)
-        youtube_api_client = build(
-            self.api_service_name, self.api_version, credentials=self.__credentials
+    def get_youtube_client(self, credentials: Credentials, api_service_name: str, api_version: str):
+        youtube_client = build(
+            api_service_name, api_version, credentials=credentials
         )
-        return youtube_api_client
+        return youtube_client
+            
+    def authenticate(self, clients_secret_file: str):
+        credentials_path = self.get_default_credentials_path()
+        credentials = self.get_credentials(credentials_path)
+        if not credentials or not self.verify_credentials(credentials, self.api_service_name, self.api_version):
+            credentials = self.generate_credentials(clients_secret_file, self.scopes)
+            self.verify_credentials(credentials, self.api_service_name, self.api_version)
+            self.save_credentials(credentials, credentials_path)
+        youtube_client = self.get_youtube_client(credentials, self.api_service_name, self.api_version)
+        self.__youtube_client = youtube_client
+        return self.__youtube_client
