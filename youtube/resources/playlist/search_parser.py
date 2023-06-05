@@ -34,10 +34,10 @@ class SearchParser(ResourceIdParse):
             playlist_id=data['playlist_id'],
             published_at=data['published_at'],
             channel_id=data['channel_id'],
-            title=data['title'],
-            description=data['description'],
-            thumbnail=data['thumbnail'],
-            channel_title=data['channel_title']
+            playlist_title=data['title'],
+            playlist_description=data['description'],
+            playlist_thumbnail=data['thumbnail'],
+            channel_title=data['channel_title'],
         )
         return playlist
 

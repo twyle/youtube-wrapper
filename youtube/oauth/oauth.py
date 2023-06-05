@@ -1,14 +1,13 @@
 import os
 import json
 
-from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from dataclasses import dataclass
 from google.auth.exceptions import RefreshError
 from json.decoder import JSONDecodeError
-from typing import Optional
+from typing import Optional, Any
 
 
 @dataclass
@@ -25,6 +24,14 @@ class Oauth:
         self.scopes = ["https://www.googleapis.com/auth/youtube.force-ssl"]
         self.__youtube_client = None
         self.__clients_secret_file = None
+        
+    @property
+    def youtube_client(self) -> Any:
+        """Get the youtube client.
+        
+        The youtube client is the object used to interact with the YouTube API.
+        """
+        return self.__youtube_client
         
     def delete_credentials_file(self, credentials_path: str) -> None:
         if os.path.exists(credentials_path):

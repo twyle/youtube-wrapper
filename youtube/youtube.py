@@ -39,13 +39,5 @@ class YouTube(Oauth, VideoMixin, ChannelMixin, CommentMixin, PlaylistMixin):
             This is a string representing the path to the client secret file downloaded from 
             Google.
         """
+        self.clients_secret_file = client_secret_file
         super().__init__()
-        self.__youtube_client = None
-        
-    @property
-    def youtube_client(self) -> Any:
-        """Get the youtube client.
-        
-        The youtube client is the object used to interact with the YouTube API.
-        """
-        return super().__youtube_client
