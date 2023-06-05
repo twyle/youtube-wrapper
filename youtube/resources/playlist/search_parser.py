@@ -2,18 +2,7 @@ from ..resource_id_parser import ResourceIdParse
 from typing import Any
 from ...models.playlist_model import Playlist
 
-class SearchParser(ResourceIdParse):
-    def __call__(self, search_response: dict[str, str]) -> list[str]:
-        return self.__parse_response(search_response)
-        
-    def __parse_response(self, search_response: dict[str, str]) -> list[str]:
-        video_ids = []
-        video_results = search_response['items']
-        for video_result in video_results:
-            video_id = video_result['id']['videoId']
-            video_ids.append(video_id)
-        return video_ids
-    
+class SearchParser(ResourceIdParse):  
     def __get_thumbnail(self, thumbnails: dict[str, str]) -> str:
         thumbnail = ''
         if thumbnails:
@@ -41,10 +30,10 @@ class SearchParser(ResourceIdParse):
         )
         return playlist
 
-    def __parse_response(self, response: dict[str, Any]) -> dict[str, str]:
+    def parse_response(self, search_response: dict[str, Any]) -> dict[str, str]:
         playlists = []
-        if response.get('items'):
-            for item in response.get('items'):
+        if search_response.get('items'):
+            for item in search_response.get('items'):
                 parsed_item = {}
                 parsed_item['playlist_id'] = item['id']['playlistId']
                 parsed_item['published_at'] = item['snippet']['publishedAt']

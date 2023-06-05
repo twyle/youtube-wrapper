@@ -1,12 +1,14 @@
 from abc import ABC, abstractmethod
 from typing import Generic, Iterator, TypeVar, Any
 from .factories import SearchFactory, FindFactory
+from .mixins.resource_list import ResourceListMixin
 
 
 T = TypeVar('T')
 
-class Resource(ABC, Generic[T]):
+class Resource(ResourceListMixin, ABC, Generic[T]):
     def __init__(self, youtube_client: Any) -> None:
+        super().__init__()
         self.__youtube_client = youtube_client
         self.__next_page_token = None
         self.__previous_page_token = None
@@ -72,6 +74,7 @@ class Resource(ABC, Generic[T]):
             find_factory = self.__search_factory.get_find_factory(resource_id)
             result = self.find(find_factory)
             resources.append(result)
+        self.items.extend(resources)
         return resources 
     
     @abstractmethod
