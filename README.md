@@ -47,3 +47,5 @@ videos = next(video_iterator)
 
 ## Documentation and Tutorials
 To learn more about the library including the documentation and tutorials, check out the [libraries' documentation](https://youtube-wrapper.readthedocs.io/en/latest/).
+
+## Contributing
