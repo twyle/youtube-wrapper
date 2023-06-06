@@ -39,9 +39,9 @@ class Resource(ResourceListMixin, ABC, Generic[T]):
         self.__previous_page_token = previous_page_token
         
     def search(self, search_factory: SearchFactory) -> Iterator:
-        self.__search_params_generator = search_factory.get_search_params_generator()
+        self.search_params_generator = search_factory.get_search_params_generator()
         self.__resource_id_parser = search_factory.get_resource_id_parser()
-        self.__search_factory = search_factory
+        self.search_factory = search_factory
         return self
     
     def find(self, find_factory: FindFactory) -> list[T]:
@@ -61,7 +61,7 @@ class Resource(ResourceListMixin, ABC, Generic[T]):
     
     def search_youtube(self) -> list[T]:
         """Search youtube for a resource given specific parameters."""
-        search_params = self.__search_params_generator()
+        search_params = self.search_params_generator()
         if self.next_page_token:
             search_params['pageToken'] = self.next_page_token
         youtube_search_request = self.youtube_client.search().list(**search_params)
@@ -71,7 +71,7 @@ class Resource(ResourceListMixin, ABC, Generic[T]):
         resource_ids = self.__resource_id_parser(youtube_search_response)
         resources = []
         for resource_id in resource_ids:
-            find_factory = self.__search_factory.get_find_factory(resource_id)
+            find_factory = self.search_factory.get_find_factory(resource_id)
             result = self.find(find_factory)
             resources.append(result)
         self.items.extend(resources)

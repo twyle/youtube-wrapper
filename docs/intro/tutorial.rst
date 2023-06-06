@@ -237,3 +237,66 @@ When done executing, it will print the channel details to the terminal:
         playlist_thumbnail='https://i.ytimg.com/img/no_thumbnail.jpg', channel_title='Wabosha Maxine', 
         privacy_status='public', videos_count=0)        
     ]
+
+Get Playlist Items
+==================
+
+Each playlist in a YouTube channel has various items, known as playlist Items. The playlist Item contains 
+information such as when the item was added to the playlist, by who , the video as well as the channel to 
+which the video belongs to. 
+
+Let us extend the ``channel_data.py`` script with a new 
+function to get a single playlist's items:
+
+.. code-block:: python
+
+    def get_channel_id():
+        videos = youtube.find_video_by_id('pIzyo4cCGxU')
+        channel_id = videos[0].channel_id
+        return channel_id
+
+    def get_channel_details(channel_id):
+        channel = youtube.find_channel_by_id(channel_id)
+        return channel
+
+    def get_channel_playlists(channel_id):
+        channel_playlists = youtube.find_channel_playlists(channel_id)
+        return channel_playlists
+
+    def get_playlist_items(playlist_id):
+        search_iterator = youtube.find_playlist_items(playlist_id, max_results=10)
+        playlists = list(next(search_iterator))
+        return playlists
+
+    def main():
+        # channel_id = get_channel_id()
+        # channel = get_channel_details(channel_id)
+        # channel_playlists = get_channel_playlists('UC5WVOSvL9bc6kwCMXXeFLLw')
+        playlists = get_playlist_items('PLouh1K1d9jkYZo8h1zPH3P1ScAWA8gxbu')
+        print(playlists)
+
+    if __name__ == '__main__':
+        main() 
+
+* :meth:`~youtube.Youtube.find_playlist_items`: finds the playlist items for a given playlist. It returns 
+  an iterator. 
+
+The ``get_playlist_items`` method returns a list of :class:`~youtube.models.PlaylistItem` by iterating through 
+the results returned by the call to :meth:`~youtube.Youtube.find_playlist_items`
+
+.. code-block:: 
+    
+    [
+        PlaylistItem(
+        playlist_item_id='UExvdWgxSzFkOWprWVpvOGgxelBIM1AxU2NBV0E4Z3hidS41NkI0NEY2RDEwNTU3Q0M2', 
+        date_added='2021-08-19T08:49:42Z', 
+        channel_adder_id='UC5WVOSvL9bc6kwCMXXeFLLw', 
+        item_title='SOMETHING IS COOKING // Wabosha Maxine', 
+        item_description='MENTIONED IN THIS VIDEO:\n-Get yourself some of the merch in this', 
+        item_thumbnail='https://i.ytimg.com/vi/27FnpZNmJ8M/mqdefault.jpg', 
+        channel_title='Wabosha Maxine', video_owner_channel_title='Wabosha Maxine', 
+        video_owner_channel_id='UC5WVOSvL9bc6kwCMXXeFLLw', 
+        playlist_id='PLouh1K1d9jkYZo8h1zPH3P1ScAWA8gxbu', position=0, video_id='27FnpZNmJ8M', 
+        resource_id='27FnpZNmJ8M', video_published_at='2021-08-19T08:51:27Z', 
+        privacy_status='public')
+    ]

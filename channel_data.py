@@ -17,11 +17,17 @@ def get_channel_playlists(channel_id):
         channel_playlists = youtube.find_channel_playlists(channel_id)
         return channel_playlists
 
+def get_playlist_items(playlist_id):
+    search_iterator = youtube.find_playlist_items(playlist_id, max_results=10)
+    playlists = list(next(search_iterator))
+    return playlists
+
 def main():
     # channel_id = get_channel_id()
     # channel = get_channel_details(channel_id)
-    channel_playlists = get_channel_playlists('UC5WVOSvL9bc6kwCMXXeFLLw')
-    print(channel_playlists)
+    # channel_playlists = get_channel_playlists('UC5WVOSvL9bc6kwCMXXeFLLw')
+    playlists = get_playlist_items('PLouh1K1d9jkYZo8h1zPH3P1ScAWA8gxbu')
+    print(playlists)
 
 if __name__ == '__main__':
     main()
