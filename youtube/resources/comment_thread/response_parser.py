@@ -6,10 +6,6 @@ from ...models.comment_thread_model import VideoCommentThread, CommentThread
 from typing import Any
 
 class VideoThreadResponseParser(ResponseParser):
-    def __call__(self, response: dict[str, str]) -> VideoCommentThread:
-        comment_threads = self.parse_comment_thread(response)
-        return comment_threads
-
     def create_author(self, data: dict[str, str]) -> CommentAuthor:
         comment_author = CommentAuthor(
             author_display_name=data['author_display_name'],
@@ -72,7 +68,7 @@ class VideoThreadResponseParser(ResponseParser):
         )
         return comment_thread
 
-    def create_video_comment_thread(self, data: dict[str, str]) -> VideoCommentThread:
+    def create_resource(self, data: dict[str, str]) -> VideoCommentThread:
         video_comment_thread = VideoCommentThread(
             video_id=data['video_id'],
             top_level_comment=data['top_level_comment'],
@@ -81,7 +77,7 @@ class VideoThreadResponseParser(ResponseParser):
         )
         return video_comment_thread
 
-    def parse_comment_thread(self, data: dict[str, Any]) -> list[VideoCommentThread]:
+    def parse_resource(self, data: dict[str, Any]) -> list[VideoCommentThread]:
         comment_threads = []
         items = data['items']
         for item in items:
@@ -95,5 +91,5 @@ class VideoThreadResponseParser(ResponseParser):
                 parsed_item['replies'] = [self.parse_comment(comment) for comment in item['replies']['comments']]
             else: 
                 parsed_item['replies'] = []
-            comment_threads.append(self.create_video_comment_thread(parsed_item))
+            comment_threads.append(parsed_item)
         return comment_threads

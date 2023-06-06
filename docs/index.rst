@@ -1,6 +1,6 @@
 
 ================================
-YouTube-v3 Wrapper documentation
+ayv documentation
 ================================
 
 A python library that wraps around the YouTube V3 API. You can use it find and manage YouTube resources 
@@ -15,20 +15,20 @@ First steps
 
    intro/overview
    intro/install
-   intro/tutorial
    intro/examples
+   intro/tutorial
 
 :doc:`intro/overview`
-    Understand what YouTube Wrapper is and how it can help you.
+    Understand what ayv is and how it can help you.
 
 :doc:`intro/install`
-    Get YouTube-V3 installed on your computer.
-
-:doc:`intro/tutorial`
-    Use the YouTube V3 Wrapper to get video information.
+    Get ayv installed on your computer.
 
 :doc:`intro/examples`
-    Learn more by playing with a pre-made projects.
+    Learn ayv by getting data about a YouTube Channel.
+
+:doc:`intro/tutorial`
+    Learn how ayv is used in a project by following along.
 
 .. toctree::
    :maxdepth: 2

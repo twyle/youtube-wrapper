@@ -12,7 +12,7 @@ import sys
 sys.path.insert(0, os.path.abspath('..'))
 
 # -- Project information -------------------------------
-project = 'Youtube-V3-Wrapper'
+project = 'ayv'
 copyright = '2023, Lyle Okoth'
 author = 'Lyle Okoth'
 
