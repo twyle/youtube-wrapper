@@ -16,11 +16,13 @@ class YouTube(Oauth, VideoMixin, ChannelMixin, CommentMixin, PlaylistMixin):
     
     Attributes
     ----------
-    youtube_client: Any
-        The object used ot interact with the YouTube V3 API.
+    client_secret_file: str
+        The path to the json file containing your authentication information.
         
     Methods
     -------
+    authenticate():
+        Generates the user credentials needed when querying the youtube api.
     search_video(query):
         Search for videos using the given query.
     find_video_by_id(video_id):
@@ -30,7 +32,7 @@ class YouTube(Oauth, VideoMixin, ChannelMixin, CommentMixin, PlaylistMixin):
     find_most_popular_video_by_region(region_code)
         Find the most popular videos in the given region.
     """
-    def __init__(self, client_secret_file: Optional[str] = '') -> None:
+    def __init__(self, client_secret_file: Optional[str] = None ) -> None:
         """Create the youtube instance.
         
         Parameters

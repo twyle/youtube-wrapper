@@ -27,7 +27,7 @@ class ResponseParser(ABC, Generic[T]):
     
     @abstractmethod
     def parse_resource(self, result: dict[str, str]) -> dict[str, str]:
-        raise NotImplementedError()
+        raise NotImplementedError() 
     
     @abstractmethod
     def create_resource(self, resource_data: dict[str, str]) -> T:

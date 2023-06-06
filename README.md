@@ -1,7 +1,12 @@
 # youtube-wrapper
+## Overview
 A python library that wraps around the YouTube V3 API. You can use it find and manage YouTube resources including Videos, Playlists, Channels and Comments.
 
 The library is modelled after [Google's own documentation](https://developers.google.com/youtube/v3/docs/videos).
+
+## Requirements
+- Python 3.7+
+- Works on Linux, Windows, macOS, BSD
 
 ## Installation
 
