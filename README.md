@@ -13,7 +13,7 @@ pip install youtube@git+https://github.com/twyle/youtube-wrapper
 To get started, you need a verified Google Account and Google API keys with the correct permissions.
 
 ### How to Get A Google API Key
-Follow the instructions in this short [article](https://console.cloud.google.com/getting-started) to get an API key.
+Follow the instructions in this short [article](https://blog.hubspot.com/website/how-to-get-youtube-api-key) to get an API key.
 
 
 To get a particular video using the videos' id:
