@@ -23,6 +23,7 @@ from youtube import YouTube
 
 client_secrets_file = '/home/lyle/Downloads/secrets.json'
 youtube = YouTube(client_secrets_file)
+youtube.authenticate()
 ```
 2. Use the video id to find the video:
 ```python
@@ -43,3 +44,6 @@ query = 'Python programming'
 video_iterator = youtube.search_video('Python')
 videos = next(video_iterator)
 ```
+
+## Documentation and Tutorials
+To learn more about the library including the documentation and tutorials, check out the [libraries documentation](https://youtube-wrapper.readthedocs.io/en/latest/).
