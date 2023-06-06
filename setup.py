@@ -37,7 +37,8 @@ setup(
             'youtube.resources.channel',
             'youtube.resources.playlist',
             'youtube.resources.playlist_item',
-            'youtube.resources.comment_thread'
+            'youtube.resources.comment_thread',
+            'youtube.resources.mixins'
         ]
         ),
     version=VERSION,

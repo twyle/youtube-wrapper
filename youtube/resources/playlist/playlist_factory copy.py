@@ -2,26 +2,12 @@ from ..factories import SearchFactory, FindFactory
 from ..param_generator import ParamGenerator
 from ..response_parsers import ResponseParser
 from ..resource_id_parser import ResourceIdParse
+from .playlist_params_generator import PlaylistSearchParamGenerator
 from .search_parser import SearchParser
-from .playlist_params_generator import (
-    FindChannelPlaylistsParamGenerator, PlaylistSearchParamGenerator,
-    FindPlaylistParamGenerator
-)
+from .playlist_params_generator import FindChannelPlaylistsParamGenerator
 from .find_parser import FindParser
 
 
-
-class PlaylistFindFactory(FindFactory):
-    def __init__(self, playlist_id: str) -> None:
-        self.__playlist_id = playlist_id
-        
-    def get_find_params_generator(self) -> ParamGenerator:
-        return FindPlaylistParamGenerator(self.__playlist_id)
-    
-    def get_response_parser(self) -> ResponseParser:
-        return FindParser()
-    
-    
 class ChannelPlaylistsFindFactory(FindFactory):
     def __init__(self, channel_id: str) -> None:
         self.__channel_id = channel_id
@@ -44,5 +30,5 @@ class PlaylistSearchFactory(SearchFactory):
     def get_resource_id_parser(self) -> ResourceIdParse:
         return SearchParser()
     
-    def get_find_factory(self, playlist_id: str) -> FindFactory:
-        return PlaylistFindFactory(playlist_id) 
+    def get_find_factory(self, video_id: str) -> FindFactory:
+        return None

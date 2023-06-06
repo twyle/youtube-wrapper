@@ -24,4 +24,4 @@ class PlaylistResource(Resource[Playlist]):
             **find_params
         )
         find_response = youtube_find_request.execute()
-        return find_response 
+        return find_response

@@ -16,14 +16,6 @@ class PlaylistSearchParamGenerator(ParamGenerator):
             'regionCode': self.__region_code
         }
         
-
-class FindPlaylistParamGenerator(ParamGenerator): 
-    def __init__(self, playlist_id: str) -> None:
-        self.__playlist_id = playlist_id
-               
-    def __call__(self) -> dict[str, str]:
-        return {}
-        
 class FindChannelPlaylistsParamGenerator(ParamGenerator): 
     def __init__(self, channel_id: str) -> None:
         self.__channel_id = channel_id

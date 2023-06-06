@@ -35,7 +35,7 @@ class SearchParser(ResourceIdParse):
         if search_response.get('items'):
             for item in search_response.get('items'):
                 parsed_item = {}
-                parsed_item['playlist_id'] = item['id']['playlistId'] 
+                parsed_item['playlist_id'] = item['id']['playlistId']
                 parsed_item['published_at'] = item['snippet']['publishedAt']
                 parsed_item['channel_id'] = item['snippet']['channelId']
                 parsed_item['title'] = item['snippet']['title']

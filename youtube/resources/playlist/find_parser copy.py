@@ -2,7 +2,10 @@ from ..resource_id_parser import ResourceIdParse
 from typing import Any
 from ...models.playlist_model import Playlist
 
-class SearchParser(ResourceIdParse):  
+class FindParser(ResourceIdParse):
+    def __call__(self, search_response: dict[str, str]) -> list[str]:
+        return self.__parse_response(search_response)
+    
     def __get_thumbnail(self, thumbnails: dict[str, str]) -> str:
         thumbnail = ''
         if thumbnails:
@@ -23,24 +26,28 @@ class SearchParser(ResourceIdParse):
             playlist_id=data['playlist_id'],
             published_at=data['published_at'],
             channel_id=data['channel_id'],
-            playlist_title=data['title'],
-            playlist_description=data['description'],
-            playlist_thumbnail=data['thumbnail'],
+            playlist_title=data['playlist_title'],
+            playlist_description=data['playlist_description'],
+            playlist_thumbnail=data['playlist_thumbnail'],
             channel_title=data['channel_title'],
+            privacy_status=data['privacy_status'],
+            videos_count=data['videos_count']
         )
         return playlist
 
-    def parse_response(self, search_response: dict[str, Any]) -> dict[str, str]:
+    def __parse_response(self, response: dict[str, Any]) -> dict[str, str]:
         playlists = []
-        if search_response.get('items'):
-            for item in search_response.get('items'):
+        if response.get('items'):
+            for item in response.get('items'):
                 parsed_item = {}
-                parsed_item['playlist_id'] = item['id']['playlistId'] 
+                parsed_item['playlist_id'] = item['id']
                 parsed_item['published_at'] = item['snippet']['publishedAt']
                 parsed_item['channel_id'] = item['snippet']['channelId']
-                parsed_item['title'] = item['snippet']['title']
-                parsed_item['description'] = item['snippet']['description']
-                parsed_item['thumbnail'] = self.__get_thumbnail(item['snippet']['thumbnails'])
+                parsed_item['playlist_title'] = item['snippet']['title']
+                parsed_item['playlist_description'] = item['snippet']['description']
+                parsed_item['playlist_thumbnail'] = self.__get_thumbnail(item['snippet']['thumbnails'])
                 parsed_item['channel_title'] = item['snippet']['channelTitle']
+                parsed_item['privacy_status'] = item['status']['privacyStatus']
+                parsed_item['videos_count'] = item['contentDetails']['itemCount']
                 playlists.append(self.__create_playlist(parsed_item))
         return playlists
