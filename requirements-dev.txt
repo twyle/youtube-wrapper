@@ -1,6 +1,8 @@
-wheel
-setuptools
-twine
-sphinx
+commitizen==3.2.2
+pre-commit==3.3.2
 recommonmark
+setuptools
+sphinx
 sphinx_rtd_theme
+twine
+wheel

@@ -1,6 +1,6 @@
 install-dev:
 	@pip install -r requirements-dev.txt
-	
+
 install-reqs:
 	@pip install -r requirements.txt
 
@@ -19,5 +19,14 @@ test-upload:
 upload:
 	@twine upload dist/*
 
+pre-commit:
+	@pre-commit install
+
+initial-tag:
+	@git tag -a -m "Initial tag." v0.0.1
+
+init-cz:
+	@cz init
+
 bump-tag:
-	@cz bump --changelog
+	@cz bump --check-consistency --changelog
