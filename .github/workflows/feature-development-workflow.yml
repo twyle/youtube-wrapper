@@ -30,10 +30,10 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
     - name: Run the flake8 linter
-      run: flake8
+      run: flake8 youtube/
 
     # - name: Run the pylint linter
-    #   run: pylint --rcfile=.pylintrc ./api
+    #   run: pylint --rcfile=.pylintrc youtube/
 
     # - name: Run the mypy linter
-    #   run: mypy -p api
+    #   run: mypy -p youtube/
