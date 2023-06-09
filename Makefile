@@ -30,3 +30,5 @@ init-cz:
 
 bump-tag:
 	@cz bump --check-consistency --changelog
+
+# build|ci|docs|feat|fix|perf|refactor|style|test|chore|revert|bump

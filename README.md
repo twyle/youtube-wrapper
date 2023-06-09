@@ -60,3 +60,15 @@ To contribute, chack out the [contribution guideline](CONTRIBUTING.md).
 ## License
 
 The API uses an [MIT License](LICENSE)
+
+## Developer
+
+Lyle Okoth – [@lylethedesigner](https://twitter.com/lylethedesigner) on twitter
+
+[lyle okoth](https://medium.com/@lyle-okoth) on medium
+
+My email is lyceokoth@gmail.com
+
+Here is my [GitHub Profile](https://github.com/twyle/)
+
+You can also find me on [Linkedin](https://www.linkedin.com/in/lyle-okoth/)
