@@ -5,7 +5,7 @@ A python library that wraps around the YouTube V3 API. You can use it find and m
 The library is modelled after [Google's own documentation](https://developers.google.com/youtube/v3/docs/videos).
 
 ## Requirements
-- Python 3.7+
+- Python 3.10+
 - Works on Linux, Windows, macOS, BSD
 
 ## Installation
