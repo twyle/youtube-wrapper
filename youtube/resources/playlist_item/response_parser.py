@@ -1,6 +1,7 @@
-from ..response_parsers import ResponseParser
-from ...models.playlist_item_model import PlaylistItem
 from typing import Any
+
+from ...models.playlist_item_model import PlaylistItem
+from ..response_parsers import ResponseParser
 
 
 class PlaylistItemResponseParser(ResponseParser):

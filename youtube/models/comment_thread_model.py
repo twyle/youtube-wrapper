@@ -1,6 +1,7 @@
 from dataclasses import dataclass, field
-from .comment_model import VideoComment, ChannelComment
 from typing import Optional
+
+from .comment_model import ChannelComment, VideoComment
 from .resource_saver_mixins import ResourseSaverMixin
 
 

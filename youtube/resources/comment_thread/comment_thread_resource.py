@@ -1,8 +1,8 @@
+from typing import Any, Iterator
+
+from ...models.comment_thread_model import CommentThread, VideoCommentThread
+from ..factories import FindFactory, SearchFactory
 from ..resource import Resource
-from ..factories import SearchFactory, FindFactory
-from typing import Iterator, Any
-from ...models.comment_thread_model import CommentThread
-from ...models.comment_thread_model import VideoCommentThread
 
 
 class CommentThreadResource(Resource):

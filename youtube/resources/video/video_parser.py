@@ -1,5 +1,5 @@
-from ..response_parsers import ResponseParser
 from ...models.video_model import Video
+from ..response_parsers import ResponseParser
 
 
 class VideoResponseParser(ResponseParser[Video]):

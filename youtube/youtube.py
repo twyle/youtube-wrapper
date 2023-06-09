@@ -1,8 +1,8 @@
-from .oauth import Oauth
-from typing import Optional
 from typing import Any, Optional
 
-from .resources.mixins import VideoMixin, ChannelMixin, CommentMixin, PlaylistMixin
+from .oauth import Oauth
+from .resources.mixins import (ChannelMixin, CommentMixin, PlaylistMixin,
+                               VideoMixin)
 
 
 class YouTube(Oauth, VideoMixin, ChannelMixin, CommentMixin, PlaylistMixin):

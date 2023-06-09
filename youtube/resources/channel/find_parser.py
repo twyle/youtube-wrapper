@@ -1,5 +1,5 @@
-from ..response_parsers import ResponseParser
 from ...models.channel_model import Channel
+from ..response_parsers import ResponseParser
 
 
 class ChannelResponseParser(ResponseParser):

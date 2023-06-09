@@ -1,11 +1,11 @@
-from ..factories import SearchFactory, FindFactory
+from ..factories import FindFactory, SearchFactory
 from ..param_generator import ParamGenerator
-from ..response_parsers import ResponseParser
 from ..resource_id_parser import ResourceIdParse
-from .playlist_params_generator import PlaylistSearchParamGenerator
-from .search_parser import SearchParser
-from .playlist_params_generator import FindChannelPlaylistsParamGenerator
+from ..response_parsers import ResponseParser
 from .find_parser import FindParser
+from .playlist_params_generator import (FindChannelPlaylistsParamGenerator,
+                                        PlaylistSearchParamGenerator)
+from .search_parser import SearchParser
 
 
 class ChannelPlaylistsFindFactory(FindFactory):

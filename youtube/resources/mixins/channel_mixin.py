@@ -1,13 +1,9 @@
-from typing import Optional, Iterator
-from .decorators import Auth
+from typing import Iterator, Optional
 
 from ...models.channel_model import Channel
-from ..channel import (
-    ChannelResource,
-    ChannelSearchFactory,
-    ChannelFindFactory,
-    ChannelFindBynameFactory,
-)
+from ..channel import (ChannelFindBynameFactory, ChannelFindFactory,
+                       ChannelResource, ChannelSearchFactory)
+from .decorators import Auth
 
 
 class ChannelMixin:

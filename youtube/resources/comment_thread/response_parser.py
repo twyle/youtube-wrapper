@@ -1,7 +1,9 @@
-from ..response_parsers import ResponseParser
-from ...models.comment_model import CommentAuthor, Comment, ChannelComment, VideoComment
-from ...models.comment_thread_model import VideoCommentThread, CommentThread
 from typing import Any
+
+from ...models.comment_model import (ChannelComment, Comment, CommentAuthor,
+                                     VideoComment)
+from ...models.comment_thread_model import CommentThread, VideoCommentThread
+from ..response_parsers import ResponseParser
 
 
 class VideoThreadResponseParser(ResponseParser):

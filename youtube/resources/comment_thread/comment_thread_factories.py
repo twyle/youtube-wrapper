@@ -1,12 +1,11 @@
-from ..factories import SearchFactory, FindFactory
+from typing import Optional
+
+from ..factories import FindFactory, SearchFactory
 from ..param_generator import ParamGenerator
 from ..resource_id_parser import ResourceIdParse
 from ..response_parsers import ResponseParser
-from .params_generator import (
-    VideoCommentThreadParamGenerator,
-    AllChannelCommentsThreadParamGenerator,
-)
-from typing import Optional
+from .params_generator import (AllChannelCommentsThreadParamGenerator,
+                               VideoCommentThreadParamGenerator)
 from .response_parser import VideoThreadResponseParser
 
 

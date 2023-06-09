@@ -1,7 +1,8 @@
-from ..resource import Resource
-from ..factories import SearchFactory, FindFactory
-from typing import Iterator, Any
+from typing import Any, Iterator
+
 from ...models.playlist_item_model import PlaylistItem
+from ..factories import FindFactory, SearchFactory
+from ..resource import Resource
 
 
 class PlaylistItemResource(Resource):

@@ -1,6 +1,7 @@
-from ..resource_id_parser import ResourceIdParse
 from typing import Any
+
 from ...models.playlist_model import Playlist
+from ..resource_id_parser import ResourceIdParse
 
 
 class FindParser(ResourceIdParse):

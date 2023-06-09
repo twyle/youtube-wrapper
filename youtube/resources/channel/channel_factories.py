@@ -1,14 +1,12 @@
-from ..factories import SearchFactory, FindFactory
+from ..factories import FindFactory, SearchFactory
 from ..param_generator import ParamGenerator
-from ..response_parsers import ResponseParser
 from ..resource_id_parser import ResourceIdParse
-from .channel_params_generator import ChannelSearchParamGenerator
-from .search_parser import ChannelIdParser
-from .channel_params_generator import (
-    FindChannelParamGenerator,
-    FindChannelByNameParamGenerator,
-)
+from ..response_parsers import ResponseParser
+from .channel_params_generator import (ChannelSearchParamGenerator,
+                                       FindChannelByNameParamGenerator,
+                                       FindChannelParamGenerator)
 from .find_parser import ChannelResponseParser
+from .search_parser import ChannelIdParser
 
 
 class ChannelFindFactory(FindFactory):

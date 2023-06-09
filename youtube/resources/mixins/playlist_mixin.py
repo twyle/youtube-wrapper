@@ -1,13 +1,10 @@
-from typing import Optional, Iterator
-from .decorators import Auth
+from typing import Iterator, Optional
 
 from ...models.playlist_model import Playlist
-from ..playlist import (
-    PlaylistSearchFactory,
-    PlaylistResource,
-    ChannelPlaylistsFindFactory,
-)
+from ..playlist import (ChannelPlaylistsFindFactory, PlaylistResource,
+                        PlaylistSearchFactory)
 from ..playlist_item import PlaylistItemResource, PlaylistItemSearchFactory
+from .decorators import Auth
 
 
 class PlaylistMixin:

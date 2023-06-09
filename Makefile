@@ -35,7 +35,7 @@ bump-tag:
 
 lint:
 	@black youtube/
-	# @isort services/app
+	@isort youtube/
 	# @flake8
 	# @pydocstyle  services/app/api
 	# @pylint --rcfile=.pylintrc ./services/app/api

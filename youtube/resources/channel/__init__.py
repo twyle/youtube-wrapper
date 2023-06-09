@@ -1,6 +1,3 @@
+from .channel_factories import (ChannelFindBynameFactory, ChannelFindFactory,
+                                ChannelSearchFactory)
 from .channel_resource import ChannelResource
-from .channel_factories import (
-    ChannelSearchFactory,
-    ChannelFindFactory,
-    ChannelFindBynameFactory,
-)

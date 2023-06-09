@@ -1,11 +1,9 @@
-from typing import Optional, Iterator
-from .decorators import Auth
+from typing import Iterator, Optional
 
-from ..comment_thread import (
-    CommentThreadResource,
-    VideoCommentThreadSearchFactory,
-    AllChannelCommentThreadSearchFactory,
-)
+from ..comment_thread import (AllChannelCommentThreadSearchFactory,
+                              CommentThreadResource,
+                              VideoCommentThreadSearchFactory)
+from .decorators import Auth
 
 
 class CommentMixin:

@@ -1,5 +1,6 @@
-from ..param_generator import ParamGenerator
 from typing import Optional
+
+from ..param_generator import ParamGenerator
 
 
 class VideoCommentThreadParamGenerator(ParamGenerator):

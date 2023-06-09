@@ -1,14 +1,12 @@
-from ..factories import SearchFactory, FindFactory
+from ..factories import FindFactory, SearchFactory
 from ..param_generator import ParamGenerator
-from .video_params_generators import (
-    VideoSearchParamGenerator,
-    FindVideoParamGenerator,
-    PopularRegionVideoParams,
-)
-from .video_id_parser import VideoIdParser
-from .video_parser import VideoResponseParser
 from ..resource_id_parser import ResourceIdParse
 from ..response_parsers import ResponseParser
+from .video_id_parser import VideoIdParser
+from .video_params_generators import (FindVideoParamGenerator,
+                                      PopularRegionVideoParams,
+                                      VideoSearchParamGenerator)
+from .video_parser import VideoResponseParser
 
 
 class VideoFindFactory(FindFactory):

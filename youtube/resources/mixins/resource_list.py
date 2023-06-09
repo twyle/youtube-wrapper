@@ -1,5 +1,6 @@
 from dataclasses import dataclass, field
-from ...models import Video, Playlist, Channel
+
+from ...models import Channel, Playlist, Video
 
 resources = Video | Playlist | Channel
 

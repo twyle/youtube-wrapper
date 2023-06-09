@@ -1,6 +1,7 @@
-from ..resource import Resource
-from ...models.video_model import Video
 from typing import Any
+
+from ...models.video_model import Video
+from ..resource import Resource
 
 
 class VideoResource(Resource[Video]):
