@@ -3,9 +3,11 @@ from ..param_generator import ParamGenerator
 from ..resource_id_parser import ResourceIdParse
 from ..response_parsers import ResponseParser
 from .video_id_parser import VideoIdParser
-from .video_params_generators import (FindVideoParamGenerator,
-                                      PopularRegionVideoParams,
-                                      VideoSearchParamGenerator)
+from .video_params_generators import (
+    FindVideoParamGenerator,
+    PopularRegionVideoParams,
+    VideoSearchParamGenerator,
+)
 from .video_parser import VideoResponseParser
 
 

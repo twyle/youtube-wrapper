@@ -106,8 +106,8 @@ class Oauth:
 
     def verify_credentials_format(self, credentials_path: str) -> bool:
         """Ensure all the keys are present"""
-        with open(credentials_path, 'r', encoding='utf-8') as f:
-            credentials_dict = json.load(f)
+        # with open(credentials_path, "r", encoding="utf-8") as f:
+        #     credentials_dict = json.load(f)
         return True
 
     def verify_credentials(

@@ -1,7 +1,6 @@
 from typing import Any
 
-from ...models.comment_model import (ChannelComment, Comment, CommentAuthor,
-                                     VideoComment)
+from ...models.comment_model import ChannelComment, Comment, CommentAuthor, VideoComment
 from ...models.comment_thread_model import CommentThread, VideoCommentThread
 from ..response_parsers import ResponseParser
 

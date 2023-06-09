@@ -1,8 +1,7 @@
 from typing import Iterator, Optional
 
 from ...models.video_model import Video
-from ..video import (PopularRegionVideoFactory, VideoFindFactory,
-                     VideoResource, VideoSearchFactory)
+from ..video import PopularRegionVideoFactory, VideoFindFactory, VideoResource, VideoSearchFactory
 from .decorators import Auth
 
 

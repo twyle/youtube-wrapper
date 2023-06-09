@@ -1,8 +1,10 @@
 from typing import Iterator, Optional
 
-from ..comment_thread import (AllChannelCommentThreadSearchFactory,
-                              CommentThreadResource,
-                              VideoCommentThreadSearchFactory)
+from ..comment_thread import (
+    AllChannelCommentThreadSearchFactory,
+    CommentThreadResource,
+    VideoCommentThreadSearchFactory,
+)
 from .decorators import Auth
 
 

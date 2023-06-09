@@ -1,8 +1,12 @@
 from typing import Iterator, Optional
 
 from ...models.channel_model import Channel
-from ..channel import (ChannelFindBynameFactory, ChannelFindFactory,
-                       ChannelResource, ChannelSearchFactory)
+from ..channel import (
+    ChannelFindBynameFactory,
+    ChannelFindFactory,
+    ChannelResource,
+    ChannelSearchFactory,
+)
 from .decorators import Auth
 
 

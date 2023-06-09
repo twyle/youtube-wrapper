@@ -1,8 +1,7 @@
 from typing import Iterator, Optional
 
 from ...models.playlist_model import Playlist
-from ..playlist import (ChannelPlaylistsFindFactory, PlaylistResource,
-                        PlaylistSearchFactory)
+from ..playlist import ChannelPlaylistsFindFactory, PlaylistResource, PlaylistSearchFactory
 from ..playlist_item import PlaylistItemResource, PlaylistItemSearchFactory
 from .decorators import Auth
 

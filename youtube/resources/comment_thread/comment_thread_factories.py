@@ -4,8 +4,10 @@ from ..factories import FindFactory, SearchFactory
 from ..param_generator import ParamGenerator
 from ..resource_id_parser import ResourceIdParse
 from ..response_parsers import ResponseParser
-from .params_generator import (AllChannelCommentsThreadParamGenerator,
-                               VideoCommentThreadParamGenerator)
+from .params_generator import (
+    AllChannelCommentsThreadParamGenerator,
+    VideoCommentThreadParamGenerator,
+)
 from .response_parser import VideoThreadResponseParser
 
 

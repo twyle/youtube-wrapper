@@ -3,8 +3,10 @@ from ..param_generator import ParamGenerator
 from ..resource_id_parser import ResourceIdParse
 from ..response_parsers import ResponseParser
 from .find_parser import FindParser
-from .playlist_params_generator import (FindChannelPlaylistsParamGenerator,
-                                        PlaylistSearchParamGenerator)
+from .playlist_params_generator import (
+    FindChannelPlaylistsParamGenerator,
+    PlaylistSearchParamGenerator,
+)
 from .search_parser import SearchParser
 
 
