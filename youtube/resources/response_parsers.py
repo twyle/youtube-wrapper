@@ -8,8 +8,8 @@ class ResponseParser(ABC, Generic[T]):
     def __call__(self, response: dict[str, str]) -> dict[str, str]:
         parsed_items = self.parse_resource(response)
         resources = [self.create_resource(item) for item in parsed_items]
-        return resources       
-    
+        return resources
+
     def get_thumbnail(self, thumbnails: dict[str, str]) -> str:
         thumbnail = ''
         if thumbnails:
@@ -24,13 +24,11 @@ class ResponseParser(ABC, Generic[T]):
             elif thumbnails.get('maxres'):
                 thumbnail = thumbnails.get('maxres').get('url')
         return thumbnail
-    
+
     @abstractmethod
     def parse_resource(self, result: dict[str, str]) -> dict[str, str]:
-        raise NotImplementedError() 
-    
+        raise NotImplementedError()
+
     @abstractmethod
     def create_resource(self, resource_data: dict[str, str]) -> T:
-        raise NotImplementedError() 
-    
-    
+        raise NotImplementedError()

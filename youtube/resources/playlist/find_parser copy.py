@@ -2,10 +2,11 @@ from ..resource_id_parser import ResourceIdParse
 from typing import Any
 from ...models.playlist_model import Playlist
 
+
 class FindParser(ResourceIdParse):
     def __call__(self, search_response: dict[str, str]) -> list[str]:
         return self.__parse_response(search_response)
-    
+
     def __get_thumbnail(self, thumbnails: dict[str, str]) -> str:
         thumbnail = ''
         if thumbnails:
@@ -31,7 +32,7 @@ class FindParser(ResourceIdParse):
             playlist_thumbnail=data['playlist_thumbnail'],
             channel_title=data['channel_title'],
             privacy_status=data['privacy_status'],
-            videos_count=data['videos_count']
+            videos_count=data['videos_count'],
         )
         return playlist
 
@@ -45,7 +46,9 @@ class FindParser(ResourceIdParse):
                 parsed_item['channel_id'] = item['snippet']['channelId']
                 parsed_item['playlist_title'] = item['snippet']['title']
                 parsed_item['playlist_description'] = item['snippet']['description']
-                parsed_item['playlist_thumbnail'] = self.__get_thumbnail(item['snippet']['thumbnails'])
+                parsed_item['playlist_thumbnail'] = self.__get_thumbnail(
+                    item['snippet']['thumbnails']
+                )
                 parsed_item['channel_title'] = item['snippet']['channelTitle']
                 parsed_item['privacy_status'] = item['status']['privacyStatus']
                 parsed_item['videos_count'] = item['contentDetails']['itemCount']

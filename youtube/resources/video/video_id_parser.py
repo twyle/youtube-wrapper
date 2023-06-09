@@ -1,5 +1,6 @@
 from ..resource_id_parser import ResourceIdParse
 
+
 class VideoIdParser(ResourceIdParse):
     def parse_response(self, search_response: dict[str, str]) -> list[str]:
         video_ids = []
