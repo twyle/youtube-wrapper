@@ -11,7 +11,7 @@ The library is modelled after [Google's own documentation](https://developers.go
 ## Installation
 
 ```sh
-pip install youtube@git+https://github.com/twyle/youtube-wrapper
+pip install ayv
 ```
 
 ## Get started
@@ -53,4 +53,10 @@ videos = next(video_iterator)
 ## Documentation and Tutorials
 To learn more about the library including the documentation and tutorials, check out the [libraries' documentation](https://youtube-wrapper.readthedocs.io/en/latest/).
 
-## Contributing
+## How to Contribute
+
+To contribute, chack out the [contribution guideline](CONTRIBUTING.md).
+
+## License
+
+The API uses an [MIT License](LICENSE)

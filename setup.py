@@ -11,7 +11,7 @@ HERE = path.abspath(path.dirname(__file__))
 with open(path.join(HERE, 'README.md'), encoding='utf-8') as f:
     LONG_DESCRIPTION = f.read()
 
-VERSION = '0.0.1' 
+VERSION = '0.5.0'
 DESCRIPTION = 'A python library that wraps around the YouTube V3 API. You can use it find and manage YouTube resources including Videos, Playlists, Channels and Comments.'
 
 key_words = [
@@ -20,12 +20,12 @@ key_words = [
 ]
 
 install_requires = [
-    'google-api-python-client', 
+    'google-api-python-client',
     'google-auth-oauthlib'
 ]
 
 setup(
-    name='youtube',
+    name='ayv',
     packages=find_packages(
         include=[
             'youtube',
@@ -43,23 +43,23 @@ setup(
         ),
     version=VERSION,
     description=DESCRIPTION,
-    long_description_content_type="text/markdown",
+    long_description_content_type='text/markdown',
     long_description=LONG_DESCRIPTION,
-    url="https://youtube.readthedocs.io/",
+    url='https://youtube-wrapper.readthedocs.io/en/latest/index.html',
     author='Lyle Okoth',
     author_email='lyceokoth@gmail.com',
     license='MIT',
     install_requires=install_requires,
     keywords=key_words,
     classifiers=[
-        "Intended Audience :: Developers",
-        "License :: OSI Approved :: MIT License",
-        "Programming Language :: Python",
-        "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.6",
-        "Programming Language :: Python :: 3.7",
-        "Programming Language :: Python :: 3.8",
-        "Programming Language :: Python :: 3.9",
-        "Operating System :: OS Independent"
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: MIT License',
+        'Programming Language :: Python',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
+        'Operating System :: OS Independent'
     ],
 )
