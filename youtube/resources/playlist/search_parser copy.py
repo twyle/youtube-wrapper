@@ -1,8 +1,10 @@
-from ..resource_id_parser import ResourceIdParse
 from typing import Any
-from ...models.playlist_model import Playlist
 
-class SearchParser(ResourceIdParse):  
+from ...models.playlist_model import Playlist
+from ..resource_id_parser import ResourceIdParse
+
+
+class SearchParser(ResourceIdParse):
     def __get_thumbnail(self, thumbnails: dict[str, str]) -> str:
         thumbnail = ''
         if thumbnails:
@@ -40,7 +42,9 @@ class SearchParser(ResourceIdParse):
                 parsed_item['channel_id'] = item['snippet']['channelId']
                 parsed_item['title'] = item['snippet']['title']
                 parsed_item['description'] = item['snippet']['description']
-                parsed_item['thumbnail'] = self.__get_thumbnail(item['snippet']['thumbnails'])
+                parsed_item['thumbnail'] = self.__get_thumbnail(
+                    item['snippet']['thumbnails']
+                )
                 parsed_item['channel_title'] = item['snippet']['channelTitle']
                 playlists.append(self.__create_playlist(parsed_item))
         return playlists

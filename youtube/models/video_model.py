@@ -1,6 +1,8 @@
-from dataclasses import dataclass
 import datetime as dt
+from dataclasses import dataclass
+
 from .resource_saver_mixins import ResourseSaverMixin
+
 
 @dataclass
 class Video(ResourseSaverMixin):
@@ -15,4 +17,3 @@ class Video(ResourseSaverMixin):
     likes_count: int
     comments_count: int
     published_at: dt.datetime
-    

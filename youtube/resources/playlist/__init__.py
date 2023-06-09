@@ -1,2 +1,2 @@
+from .playlist_factory import ChannelPlaylistsFindFactory, PlaylistSearchFactory
 from .playlist_resource import PlaylistResource
-from .playlist_factory import PlaylistSearchFactory, ChannelPlaylistsFindFactory

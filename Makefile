@@ -32,3 +32,10 @@ bump-tag:
 	@cz bump --check-consistency --changelog
 
 # build|ci|docs|feat|fix|perf|refactor|style|test|chore|revert|bump
+
+lint:
+	@black youtube/
+	@isort youtube/
+	@flake8 youtube/
+	# @pydocstyle  services/app/api
+	# @pylint --rcfile=.pylintrc ./services/app/api

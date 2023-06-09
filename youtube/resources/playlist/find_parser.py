@@ -1,6 +1,8 @@
-from ..resource_id_parser import ResourceIdParse
 from typing import Any
+
 from ...models.playlist_model import Playlist
+from ..resource_id_parser import ResourceIdParse
+
 
 class FindParser(ResourceIdParse):
     def create_playlist(self, data: dict[str, str]) -> list[Playlist]:
@@ -13,9 +15,9 @@ class FindParser(ResourceIdParse):
             playlist_thumbnail=data['playlist_thumbnail'],
             channel_title=data['channel_title'],
             privacy_status=data['privacy_status'],
-            videos_count=data['videos_count']
+            videos_count=data['videos_count'],
         )
-        return playlist 
+        return playlist
 
     def parse_response(self, response: dict[str, Any]) -> dict[str, str]:
         playlists = []
@@ -27,13 +29,15 @@ class FindParser(ResourceIdParse):
                 parsed_item['channel_id'] = item['snippet']['channelId']
                 parsed_item['playlist_title'] = item['snippet']['title']
                 parsed_item['playlist_description'] = item['snippet']['description']
-                parsed_item['playlist_thumbnail'] = self.get_thumbnail(item['snippet']['thumbnails'])
+                parsed_item['playlist_thumbnail'] = self.get_thumbnail(
+                    item['snippet']['thumbnails']
+                )
                 parsed_item['channel_title'] = item['snippet']['channelTitle']
                 parsed_item['privacy_status'] = item['status']['privacyStatus']
                 parsed_item['videos_count'] = item['contentDetails']['itemCount']
                 playlists.append(self.create_playlist(parsed_item))
         return playlists
-    
+
     def get_thumbnail(self, thumbnails: dict[str, str]) -> str:
         thumbnail = ''
         if thumbnails:
