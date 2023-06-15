@@ -24,4 +24,4 @@ To install from GitHub, run:
 
 .. code-block::
 
-    pip install youtube@git+https://github.com/twyle/youtube-wrapper
+    pip install ayv
