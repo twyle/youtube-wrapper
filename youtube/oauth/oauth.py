@@ -143,11 +143,17 @@ class Oauth:
         youtube_client = build(api_service_name, api_version, credentials=credentials)
         return youtube_client
 
-    def authenticate(self, clients_secret_file: Optional[str] = ''):
+    def authenticate(self, clients_secret_file: Optional[str] = '', credentials_directory: Optional[str] = ''):
         if clients_secret_file:
             self.clients_secret_file = clients_secret_file
-        credentials_path = self.get_default_credentials_path()
-        credentials = self.get_credentials(credentials_path)
+        if credentials_directory:
+            credentials_path = os.path.join(credentials_directory, self.token_file)
+        else:
+            credentials_path = self.get_default_credentials_path()
+        try:
+            credentials = self.get_credentials(credentials_path)
+        except ValueError:
+            credentials = None
         if not credentials or not self.verify_credentials(
             credentials, self.api_service_name, self.api_version
         ):
