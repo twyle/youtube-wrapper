@@ -38,11 +38,12 @@ def print_videos(videos):
     print(vids)
 
 # client_secrets_file = '/home/lyle/Downloads/python_learning_site.json'
-client_secrets_file = '/home/lyle/Downloads/temp.json'
+client_secrets_file = '/home/lyle/Downloads/client_secret.json'
+credentials_path = '.'
 youtube = YouTube(client_secrets_file)
-youtube.authenticate()
-# search_iterator = youtube.search_video('Python for beginners',max_results=2)
-# print(list(next(search_iterator)))
+youtube.authenticate(credentials_directory=credentials_path)
+search_iterator = youtube.search_video('Python for beginners' ,max_results=2)
+print(list(next(search_iterator)))
 # print(list(next(search_iterator)))
 # print(len(search_iterator.items))
 # print_videos(next(search_iterator))
